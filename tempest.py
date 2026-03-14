@@ -4,11 +4,6 @@
 import sys
 import json
 
-# Windows CGI環境でのUTF-8出力
-if sys.platform == 'win32':
-    import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
 print("Content-Type: text/html; charset=utf-8")
 print()
 
@@ -178,29 +173,31 @@ HTML = f"""<!DOCTYPE html>
 <title>テンペスト スキル・精髄チェッカー | Diablo Immortal</title>
 <style>
   :root {{
-    --bg-primary: #0a0d14;
-    --bg-secondary: #10151f;
-    --bg-card: #161c2a;
-    --bg-card-hover: #1e2738;
-    --accent: #4fc3f7;
-    --accent-glow: rgba(79,195,247,0.3);
-    --accent2: #7c4dff;
-    --gold: #ffd54f;
-    --gold-dark: #f9a825;
-    --text-primary: #e8eaf6;
-    --text-secondary: #90a4ae;
-    --text-muted: #546e7a;
-    --border: #1e2d3d;
-    --border-accent: #4fc3f730;
-    --selected-bg: rgba(79,195,247,0.12);
-    --selected-border: #4fc3f7;
-    --success: #66bb6a;
-    --slot-head: #ef5350;
-    --slot-shoulder: #ab47bc;
-    --slot-chest: #42a5f5;
-    --slot-legs: #26a69a;
-    --slot-main: #ffa726;
-    --slot-off: #ec407a;
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f7fafc;
+    --accent: #0077b6;
+    --accent-glow: rgba(0,119,182,0.2);
+    --accent2: #6d28d9;
+    --gold: #d97706;
+    --gold-dark: #b45309;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-muted: #a0aec0;
+    --border: #e2e8f0;
+    --border-accent: rgba(0,119,182,0.3);
+    --selected-bg: rgba(0,119,182,0.08);
+    --selected-border: #0077b6;
+    --success: #059669;
+    --slot-head: #dc2626;
+    --slot-shoulder: #9333ea;
+    --slot-chest: #2563eb;
+    --slot-legs: #0d9488;
+    --slot-main: #ea580c;
+    --slot-off: #db2777;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
@@ -210,40 +207,42 @@ HTML = f"""<!DOCTYPE html>
     min-height: 100vh;
     line-height: 1.6;
   }}
+
   /* Header */
   header {{
-    background: linear-gradient(135deg, #0d1b2e 0%, #1a0a2e 100%);
-    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #1e3a5f 0%, #312e81 100%);
+    border-bottom: 2px solid rgba(255,255,255,0.1);
     padding: 1rem 1.5rem;
     text-align: center;
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
   }}
   header h1 {{
     font-size: clamp(1rem, 3vw, 1.4rem);
     font-weight: 700;
-    background: linear-gradient(90deg, var(--accent), var(--gold));
+    background: linear-gradient(90deg, #90cdf4, #fbd38d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: 0.05em;
   }}
-  header p {{ color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.2rem; }}
+  header p {{ color: rgba(255,255,255,0.55); font-size: 0.8rem; margin-top: 0.2rem; }}
 
   /* Selected panel */
   #selected-panel {{
-    background: linear-gradient(135deg, #0f1923, #1a1030);
-    border-bottom: 1px solid var(--border-accent);
+    background: linear-gradient(135deg, #eff6ff, #faf5ff);
+    border-bottom: 2px solid var(--border);
     padding: 0.75rem 1.5rem;
     display: none;
+    box-shadow: var(--shadow);
   }}
   #selected-panel h2 {{
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--gold);
+    color: var(--gold-dark);
     margin-bottom: 0.6rem;
   }}
   #selected-list {{
@@ -255,58 +254,54 @@ HTML = f"""<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(255,213,79,0.1);
-    border: 1px solid rgba(255,213,79,0.4);
+    background: rgba(180,83,9,0.08);
+    border: 1px solid rgba(180,83,9,0.3);
     border-radius: 20px;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
+    color: var(--text-primary);
   }}
-  .selected-tag:hover {{ background: rgba(255,213,79,0.2); }}
-  .selected-tag .slot-badge {{
-    font-size: 0.65rem;
-    opacity: 0.7;
-  }}
-  .selected-tag .remove-btn {{
-    opacity: 0.5;
-    font-size: 0.8rem;
-    margin-left: 0.2rem;
-  }}
+  .selected-tag:hover {{ background: rgba(180,83,9,0.15); }}
+  .selected-tag .slot-badge {{ font-size: 0.65rem; opacity: 0.7; }}
+  .selected-tag .remove-btn {{ opacity: 0.45; font-size: 0.8rem; margin-left: 0.2rem; }}
   .selected-tag:hover .remove-btn {{ opacity: 1; }}
 
   /* Main container */
   main {{
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 1.5rem;
   }}
 
-  /* Skill selection */
+  /* Skill section */
   .skill-section {{
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
   }}
-  .skill-section h2 {{
+  .section-title {{
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--accent);
     margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }}
-  .skill-section h2::before {{
+  .section-title.blue {{ color: var(--accent); }}
+  .section-title.gold {{ color: var(--gold-dark); }}
+  .section-title::before {{
     content: '';
     display: block;
     width: 3px;
     height: 1em;
-    background: var(--accent);
     border-radius: 2px;
+    background: currentColor;
   }}
   .skill-grid {{
     display: grid;
@@ -323,40 +318,122 @@ HTML = f"""<!DOCTYPE html>
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    font-weight: 600;
   }}
   .skill-slot select {{
     background: var(--bg-secondary);
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 1.5px solid var(--border);
     border-radius: 8px;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
     font-size: 0.85rem;
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     width: 100%;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%234fc3f7'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%230077b6'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
-    padding-right: 2rem;
+    box-shadow: var(--shadow);
   }}
   .skill-slot select:focus {{
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent-glow);
+    box-shadow: 0 0 0 3px var(--accent-glow);
   }}
   .skill-slot select.has-value {{
     border-color: var(--accent);
     color: var(--accent);
+    font-weight: 600;
   }}
+
+  /* Bookmark section */
+  .bookmark-section {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }}
+  .bookmark-actions {{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }}
+  #bookmark-name-input {{
+    flex: 1;
+    min-width: 180px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }}
+  #bookmark-name-input:focus {{
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.15);
+  }}
+  #save-bookmark-btn {{
+    background: linear-gradient(135deg, var(--gold-dark), #f59e0b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.48rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+  }}
+  #save-bookmark-btn:hover {{ transform: translateY(-1px); box-shadow: var(--shadow-md); }}
+  #save-bookmark-btn:active {{ transform: translateY(0); }}
+  #bookmark-list {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 1.5rem;
+  }}
+  .bookmark-tag {{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 20px;
+    padding: 0.3rem 0.5rem 0.3rem 0.9rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #78350f;
+  }}
+  .bookmark-tag:hover {{ background: #fde68a; border-color: #f59e0b; }}
+  .bookmark-tag .bm-name {{ font-weight: 600; }}
+  .bookmark-tag .bm-date {{ font-size: 0.68rem; opacity: 0.65; }}
+  .bookmark-tag .bm-delete {{
+    opacity: 0.45;
+    font-size: 0.72rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 50%;
+    transition: all 0.15s;
+  }}
+  .bookmark-tag .bm-delete:hover {{ opacity: 1; background: rgba(0,0,0,0.1); }}
+  .bookmark-empty {{ font-size: 0.8rem; color: var(--text-muted); }}
 
   /* Search button */
   .search-wrap {{
     text-align: center;
-    margin: 1.5rem 0;
+    margin: 1.25rem 0;
   }}
   #search-btn {{
-    background: linear-gradient(135deg, #0077b6, var(--accent2));
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     color: white;
     border: none;
     border-radius: 30px;
@@ -366,7 +443,7 @@ HTML = f"""<!DOCTYPE html>
     cursor: pointer;
     letter-spacing: 0.05em;
     transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(79,195,247,0.3);
+    box-shadow: 0 4px 20px rgba(0,119,182,0.3);
     position: relative;
     overflow: hidden;
   }}
@@ -375,85 +452,112 @@ HTML = f"""<!DOCTYPE html>
     position: absolute;
     top: 0; left: -100%;
     width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     transition: left 0.5s;
   }}
   #search-btn:hover::before {{ left: 100%; }}
-  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(79,195,247,0.5); }}
+  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0,119,182,0.45); }}
   #search-btn:active {{ transform: translateY(0); }}
 
   /* Results */
   #results {{ display: none; }}
-  #results h2 {{
+  #results-header {{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }}
+  #results-header h2 {{
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
-    margin-bottom: 1rem;
-    text-align: center;
   }}
+  .tooltip-hint {{
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }}
+
+  /* 6-column grid for PC */
   .slots-grid {{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
   }}
+  @media (max-width: 1400px) {{
+    .slots-grid {{ grid-template-columns: repeat(3, 1fr); }}
+  }}
+  @media (max-width: 900px) {{
+    .slots-grid {{ grid-template-columns: repeat(2, 1fr); }}
+  }}
+  @media (max-width: 560px) {{
+    .slots-grid {{ grid-template-columns: 1fr; }}
+  }}
+
   .slot-card {{
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow);
   }}
-  .slot-card:hover {{ border-color: var(--border-accent); }}
+  .slot-card:hover {{ border-color: var(--border-accent); box-shadow: var(--shadow-md); }}
   .slot-header {{
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 0.9rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--border);
+    background: #f8fafc;
   }}
   .slot-title {{
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
   }}
   .slot-limit {{
-    font-size: 0.7rem;
-    background: rgba(255,255,255,0.08);
+    font-size: 0.68rem;
+    background: rgba(0,0,0,0.05);
     border-radius: 10px;
-    padding: 0.15rem 0.5rem;
+    padding: 0.12rem 0.45rem;
     color: var(--text-secondary);
+    white-space: nowrap;
   }}
-  .slot-limit.at-limit {{ background: rgba(79,195,247,0.15); color: var(--accent); }}
-  .slot-essences {{ padding: 0.5rem; }}
+  .slot-limit.at-limit {{ background: rgba(0,119,182,0.1); color: var(--accent); font-weight: 700; }}
+  .slot-essences {{ padding: 0.4rem; }}
   .essence-count {{
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
-    padding: 0.3rem 0.5rem;
+    padding: 0.25rem 0.4rem;
     text-align: right;
   }}
   .no-essences {{
-    padding: 1.5rem;
+    padding: 1.25rem;
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }}
 
   /* Essence card */
   .essence-card {{
-    border: 1px solid transparent;
+    border: 1.5px solid transparent;
     border-radius: 8px;
-    padding: 0.65rem 0.75rem;
+    padding: 0.6rem 0.65rem;
     cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 0.35rem;
-    position: relative;
+    transition: all 0.15s;
+    margin-bottom: 0.3rem;
+    user-select: none;
   }}
+  .essence-card:last-child {{ margin-bottom: 0; }}
   .essence-card:hover {{
-    background: var(--bg-card-hover);
-    border-color: var(--border-accent);
+    background: #f0f7ff;
+    border-color: rgba(0,119,182,0.25);
   }}
   .essence-card.selected {{
     background: var(--selected-bg);
@@ -461,41 +565,41 @@ HTML = f"""<!DOCTYPE html>
     box-shadow: 0 0 0 1px var(--selected-border) inset;
   }}
   .essence-card.disabled {{
-    opacity: 0.4;
+    opacity: 0.3;
     cursor: not-allowed;
-  }}
-  .essence-card.disabled:hover {{
-    background: transparent;
-    border-color: transparent;
+    pointer-events: none;
   }}
   .essence-name {{
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     color: var(--text-primary);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.35rem;
+    line-height: 1.3;
   }}
   .essence-name .check-icon {{
     color: var(--accent);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     display: none;
+    flex-shrink: 0;
   }}
   .essence-card.selected .check-icon {{ display: inline; }}
   .essence-skill {{
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
   }}
   .essence-skill span {{
     color: var(--accent);
-    background: rgba(79,195,247,0.1);
-    padding: 0.1rem 0.4rem;
+    background: rgba(0,119,182,0.08);
+    padding: 0.08rem 0.35rem;
     border-radius: 4px;
+    font-weight: 600;
   }}
   .essence-desc {{
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
     line-height: 1.5;
   }}
@@ -510,33 +614,25 @@ HTML = f"""<!DOCTYPE html>
 
   /* Responsive */
   @media (max-width: 600px) {{
-    main {{ padding: 1rem; }}
+    main {{ padding: 0.75rem; }}
     .skill-grid {{ grid-template-columns: repeat(2, 1fr); }}
-    .slots-grid {{ grid-template-columns: 1fr; }}
     header {{ padding: 0.75rem 1rem; }}
     #selected-panel {{ padding: 0.75rem 1rem; }}
+    .bookmark-section, .skill-section {{ padding: 1rem; }}
   }}
 
   /* Animation */
   @keyframes fadeIn {{
-    from {{ opacity: 0; transform: translateY(10px); }}
+    from {{ opacity: 0; transform: translateY(8px); }}
     to {{ opacity: 1; transform: translateY(0); }}
   }}
-  .slot-card {{ animation: fadeIn 0.3s ease both; }}
-  .slot-card:nth-child(1) {{ animation-delay: 0.05s; }}
-  .slot-card:nth-child(2) {{ animation-delay: 0.1s; }}
-  .slot-card:nth-child(3) {{ animation-delay: 0.15s; }}
-  .slot-card:nth-child(4) {{ animation-delay: 0.2s; }}
-  .slot-card:nth-child(5) {{ animation-delay: 0.25s; }}
-  .slot-card:nth-child(6) {{ animation-delay: 0.3s; }}
-
-  /* Tooltip on mobile */
-  .tooltip-hint {{
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-align: center;
-    margin-bottom: 0.75rem;
-  }}
+  .slot-card {{ animation: fadeIn 0.25s ease both; }}
+  .slot-card:nth-child(1) {{ animation-delay: 0.03s; }}
+  .slot-card:nth-child(2) {{ animation-delay: 0.06s; }}
+  .slot-card:nth-child(3) {{ animation-delay: 0.09s; }}
+  .slot-card:nth-child(4) {{ animation-delay: 0.12s; }}
+  .slot-card:nth-child(5) {{ animation-delay: 0.15s; }}
+  .slot-card:nth-child(6) {{ animation-delay: 0.18s; }}
 </style>
 </head>
 <body>
@@ -553,10 +649,17 @@ HTML = f"""<!DOCTYPE html>
 
 <main>
   <section class="skill-section">
-    <h2>スキル選択</h2>
-    <div class="skill-grid" id="skill-grid">
-      <!-- populated by JS -->
+    <h2 class="section-title blue">スキル選択</h2>
+    <div class="skill-grid" id="skill-grid"></div>
+  </section>
+
+  <section class="bookmark-section">
+    <h2 class="section-title gold">🔖 ブックマーク</h2>
+    <div class="bookmark-actions">
+      <input type="text" id="bookmark-name-input" placeholder="ブックマーク名を入力..." maxlength="30">
+      <button id="save-bookmark-btn" onclick="saveBookmark()">💾 保存</button>
     </div>
+    <div id="bookmark-list"></div>
   </section>
 
   <div class="search-wrap">
@@ -564,8 +667,10 @@ HTML = f"""<!DOCTYPE html>
   </div>
 
   <div id="results">
-    <h2>使用可能な精髄一覧</h2>
-    <p class="tooltip-hint">精髄をタップ／クリックして選択（頭・肩・胴・脚：各1つ、メインハンド・オフハンド：各2つまで）</p>
+    <div id="results-header">
+      <h2>使用可能な精髄一覧</h2>
+    </div>
+    <p class="tooltip-hint">精髄をクリックして選択（頭・肩・胴・脚：各1つ、メインハンド・オフハンド：各2つまで）</p>
     <div class="slots-grid" id="slots-grid"></div>
   </div>
 </main>
@@ -578,11 +683,15 @@ const SKILLS = {skills_json};
 const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"⚔️","オフハンド":"🗡️"}};
 const SLOT_ORDER = ["頭","肩","胴","脚","メインハンド","オフハンド"];
 
-// selected: {{slotName: [{{name, skill, desc}}, ...]}}
+// 現在表示中の精髄データ（スロットごと）
+let currentEssences = {{}};
+SLOT_ORDER.forEach(s => currentEssences[s] = []);
+
+// 選択済み精髄
 const selected = {{}};
 SLOT_ORDER.forEach(s => selected[s] = []);
 
-// Build skill selects
+// ===== スキルグリッド構築 =====
 function buildSkillGrid() {{
   const grid = document.getElementById('skill-grid');
   const slots = [
@@ -593,12 +702,14 @@ function buildSkillGrid() {{
     const div = document.createElement('div');
     div.className = 'skill-slot';
     div.innerHTML = `<label for="${{s.id}}">${{s.label}}</label>
-      <select id="${{s.id}}" onchange="onSkillChange()">
+      <select id="${{s.id}}">
         <option value="">-- 未設定 --</option>
         ${{s.options.map(o => `<option value="${{o}}">${{o}}</option>`).join('')}}
       </select>`;
     grid.appendChild(div);
   }});
+  // イベントリスナー設定
+  grid.querySelectorAll('select').forEach(sel => sel.addEventListener('change', onSkillChange));
 }}
 
 function getSelectedSkills() {{
@@ -613,10 +724,8 @@ function getSelectedSkills() {{
 }}
 
 function onSkillChange() {{
-  // Prevent duplicate skill selections (not main attack)
   const allSkillSelects = Array.from({{length:5}}, (_,i) => document.getElementById(`skill${{i+1}}`));
   const chosen = allSkillSelects.map(s => s.value).filter(Boolean);
-
   allSkillSelects.forEach(sel => {{
     const current = sel.value;
     Array.from(sel.options).forEach(opt => {{
@@ -625,22 +734,25 @@ function onSkillChange() {{
     }});
     sel.classList.toggle('has-value', !!current);
   }});
-
-  const mainSel = document.getElementById('main');
-  mainSel.classList.toggle('has-value', !!mainSel.value);
+  document.getElementById('main').classList.toggle('has-value', !!document.getElementById('main').value);
 }}
 
+// ===== 検索 =====
 function doSearch() {{
   const skills = getSelectedSkills();
   const slotsGrid = document.getElementById('slots-grid');
   slotsGrid.innerHTML = '';
 
+  SLOT_ORDER.forEach(slot => {{
+    currentEssences[slot] = ESSENCES[slot].filter(e => skills.includes(e.skill));
+  }});
+
   SLOT_ORDER.forEach((slot, idx) => {{
-    const essences = ESSENCES[slot].filter(e => skills.includes(e.skill));
+    const essences = currentEssences[slot];
     const card = document.createElement('div');
     card.className = 'slot-card';
     card.dataset.slot = slot;
-    card.style.animationDelay = `${{idx * 0.05}}s`;
+    card.style.animationDelay = `${{idx * 0.03}}s`;
 
     const limit = LIMITS[slot];
     const selCount = selected[slot].length;
@@ -648,13 +760,10 @@ function doSearch() {{
     card.innerHTML = `
       <div class="slot-header">
         <div class="slot-title">${{SLOT_ICONS[slot]}} ${{slot}}</div>
-        <div class="slot-limit" id="limit-${{slot}}">選択: ${{selCount}}/${{limit}}</div>
+        <div class="slot-limit${{selCount >= limit ? ' at-limit' : ''}}" id="limit-${{slot}}">選択: ${{selCount}}/${{limit}}</div>
       </div>
       <div class="slot-essences" id="essences-${{slot}}">
-        ${{essences.length === 0
-          ? '<div class="no-essences">該当する精髄なし</div>'
-          : `<div class="essence-count">${{essences.length}}件</div>` + essences.map(e => renderEssence(slot, e)).join('')
-        }}
+        ${{renderEssenceList(slot, essences)}}
       </div>`;
     slotsGrid.appendChild(card);
   }});
@@ -664,12 +773,18 @@ function doSearch() {{
   refreshSelectedPanel();
 }}
 
-function renderEssence(slot, e) {{
+function renderEssenceList(slot, essences) {{
+  if (essences.length === 0) return '<div class="no-essences">該当する精髄なし</div>';
+  return `<div class="essence-count">${{essences.length}}件</div>` +
+    essences.map((e, idx) => renderEssence(slot, e, idx)).join('');
+}}
+
+function renderEssence(slot, e, idx) {{
   const isSelected = selected[slot].some(s => s.name === e.name);
   const atLimit = selected[slot].length >= LIMITS[slot];
   const isDisabled = !isSelected && atLimit;
-  return `<div class="essence-card${{isSelected?' selected':''}}${{isDisabled?' disabled':''}}"
-    onclick="toggleEssence('${{slot}}', ${{JSON.stringify(JSON.stringify(e))}})">
+  return `<div class="essence-card${{isSelected ? ' selected' : ''}}${{isDisabled ? ' disabled' : ''}}"
+    data-slot="${{slot}}" data-index="${{idx}}">
     <div class="essence-name">
       <span class="check-icon">✓</span>
       ${{e.name}}
@@ -679,8 +794,18 @@ function renderEssence(slot, e) {{
   </div>`;
 }}
 
-function toggleEssence(slot, eJson) {{
-  const e = JSON.parse(eJson);
+// ===== イベントデリゲーション（精髄カード選択） =====
+document.getElementById('slots-grid').addEventListener('click', function(ev) {{
+  const card = ev.target.closest('.essence-card');
+  if (!card || card.classList.contains('disabled')) return;
+  const slot = card.dataset.slot;
+  const idx = parseInt(card.dataset.index);
+  const essence = currentEssences[slot] && currentEssences[slot][idx];
+  if (!essence) return;
+  toggleEssence(slot, essence);
+}});
+
+function toggleEssence(slot, e) {{
   const idx = selected[slot].findIndex(s => s.name === e.name);
   if (idx >= 0) {{
     selected[slot].splice(idx, 1);
@@ -688,20 +813,21 @@ function toggleEssence(slot, eJson) {{
     if (selected[slot].length >= LIMITS[slot]) return;
     selected[slot].push(e);
   }}
-  // Re-render just this slot's essences
-  const skills = getSelectedSkills();
-  const essences = ESSENCES[slot].filter(ev => skills.includes(ev.skill));
+  // スロットの表示を更新
+  const essences = currentEssences[slot];
   const container = document.getElementById(`essences-${{slot}}`);
+  if (!container) return;
   const selCount = selected[slot].length;
   const limitEl = document.getElementById(`limit-${{slot}}`);
-  limitEl.textContent = `選択: ${{selCount}}/${{LIMITS[slot]}}`;
-  limitEl.className = `slot-limit${{selCount >= LIMITS[slot] ? ' at-limit' : ''}}`;
-  container.innerHTML = essences.length === 0
-    ? '<div class="no-essences">該当する精髄なし</div>'
-    : `<div class="essence-count">${{essences.length}}件</div>` + essences.map(e2 => renderEssence(slot, e2)).join('');
+  if (limitEl) {{
+    limitEl.textContent = `選択: ${{selCount}}/${{LIMITS[slot]}}`;
+    limitEl.className = `slot-limit${{selCount >= LIMITS[slot] ? ' at-limit' : ''}}`;
+  }}
+  container.innerHTML = renderEssenceList(slot, essences);
   refreshSelectedPanel();
 }}
 
+// ===== 選択パネル更新 =====
 function refreshSelectedPanel() {{
   const panel = document.getElementById('selected-panel');
   const list = document.getElementById('selected-list');
@@ -712,16 +838,93 @@ function refreshSelectedPanel() {{
   }}
   panel.style.display = 'block';
   list.innerHTML = allSelected.map(e => `
-    <div class="selected-tag" onclick="toggleEssence('${{e.slot}}', ${{JSON.stringify(JSON.stringify(e))}})">
+    <div class="selected-tag" data-slot="${{e.slot}}" data-name="${{encodeURIComponent(e.name)}}">
       <span class="slot-badge">${{SLOT_ICONS[e.slot]}} ${{e.slot}}</span>
       <strong>${{e.name}}</strong>
       <span class="remove-btn">✕</span>
     </div>`).join('');
-  // Scroll to top
-  window.scrollTo({{top: 0, behavior: 'smooth'}});
 }}
 
+// selected-tag クリック（イベントデリゲーション）
+document.getElementById('selected-list').addEventListener('click', function(ev) {{
+  const tag = ev.target.closest('.selected-tag');
+  if (!tag) return;
+  const slot = tag.dataset.slot;
+  const name = decodeURIComponent(tag.dataset.name);
+  const essence = selected[slot].find(s => s.name === name);
+  if (essence) toggleEssence(slot, essence);
+}});
+
+// ===== ブックマーク機能 =====
+function saveBookmark() {{
+  const nameInput = document.getElementById('bookmark-name-input');
+  const name = nameInput.value.trim();
+  if (!name) {{
+    nameInput.focus();
+    nameInput.style.borderColor = '#ef4444';
+    setTimeout(() => nameInput.style.borderColor = '', 1800);
+    return;
+  }}
+  const skills = {{ main: document.getElementById('main').value }};
+  for (let i = 1; i <= 5; i++) {{
+    skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
+  }}
+  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  bookmarks.push({{ name, skills, date: new Date().toLocaleDateString('ja-JP') }});
+  localStorage.setItem('tempest_bookmarks', JSON.stringify(bookmarks));
+  nameInput.value = '';
+  renderBookmarks();
+}}
+
+function loadBookmark(idx) {{
+  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  const bm = bookmarks[idx];
+  if (!bm) return;
+  document.getElementById('main').value = bm.skills.main || '';
+  for (let i = 1; i <= 5; i++) {{
+    document.getElementById(`skill${{i}}`).value = bm.skills[`skill${{i}}`] || '';
+  }}
+  onSkillChange();
+  doSearch();
+}}
+
+function deleteBookmark(idx) {{
+  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  bookmarks.splice(idx, 1);
+  localStorage.setItem('tempest_bookmarks', JSON.stringify(bookmarks));
+  renderBookmarks();
+}}
+
+function renderBookmarks() {{
+  const list = document.getElementById('bookmark-list');
+  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  if (bookmarks.length === 0) {{
+    list.innerHTML = '<span class="bookmark-empty">ブックマークはまだありません</span>';
+    return;
+  }}
+  list.innerHTML = bookmarks.map((bm, idx) => `
+    <div class="bookmark-tag" data-idx="${{idx}}">
+      <span class="bm-name">${{bm.name}}</span>
+      <span class="bm-date">${{bm.date}}</span>
+      <span class="bm-delete" data-idx="${{idx}}">✕</span>
+    </div>`).join('');
+}}
+
+// ブックマーク クリック（イベントデリゲーション）
+document.getElementById('bookmark-list').addEventListener('click', function(ev) {{
+  const del = ev.target.closest('.bm-delete');
+  if (del) {{
+    ev.stopPropagation();
+    deleteBookmark(parseInt(del.dataset.idx));
+    return;
+  }}
+  const tag = ev.target.closest('.bookmark-tag');
+  if (tag) loadBookmark(parseInt(tag.dataset.idx));
+}});
+
+// ===== 初期化 =====
 buildSkillGrid();
+renderBookmarks();
 </script>
 </body>
 </html>"""
