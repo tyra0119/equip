@@ -282,7 +282,7 @@ HTML = """<!DOCTYPE html>
 </main>
 
 <footer>
-  Diablo Immortal 精髄チェッカー — 非公式ファンツール
+  Diablo Immortal 精髄チェッカー
 </footer>
 </body>
 </html>"""
