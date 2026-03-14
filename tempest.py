@@ -219,16 +219,42 @@ HTML = f"""<!DOCTYPE html>
     z-index: 100;
     box-shadow: 0 2px 12px rgba(0,0,0,0.25);
   }}
-  header h1 {{
-    font-size: clamp(1rem, 3vw, 1.4rem);
+  .back-btn {{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }}
+  .back-btn:hover {{ color: white; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }}
+  .header-inner {{
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }}
+  .header-title {{
+    flex: 1;
+    text-align: center;
+  }}
+  .header-title h1 {{
+    font-size: clamp(0.95rem, 2.5vw, 1.3rem);
     font-weight: 700;
-    background: linear-gradient(90deg, #90cdf4, #fbd38d);
+    background: linear-gradient(90deg, #fca5a5, #fde68a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: 0.05em;
   }}
-  header p {{ color: rgba(255,255,255,0.55); font-size: 0.8rem; margin-top: 0.2rem; }}
+  .header-title p {{ color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.1rem; }}
+  .header-spacer {{ width: 80px; }}
 
   /* Selected panel */
   #selected-panel {{
@@ -638,8 +664,14 @@ HTML = f"""<!DOCTYPE html>
 <body>
 
 <header>
+  <div class="header-inner">
+    <a class="back-btn" href="index.py">← クラス選択</a>
+    <div class="header-title">
   <h1>⚔️ テンペスト 精髄チェッカー</h1>
   <p>Diablo Immortal — スキルを選択して使用可能な精髄を検索</p>
+    </div>
+    <div class="header-spacer"></div>
+  </div>
 </header>
 
 <div id="selected-panel">
