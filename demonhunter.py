@@ -44,7 +44,11 @@ ESSENCES = {
         {"skill": "脱出", "name": "罪深き虚構", "desc": "メイン攻撃で敵を攻撃するたびに＜脱出＞のクールダウンが0.16秒短縮される。"},
         {"skill": "報復", "name": "顔盗み", "desc": "＜報復＞発動中に毒状態の敵を攻撃すると、猛毒が爆発して9,088ダメージを与える。この効果は敵毎に１秒に１回しか発動しない。"},
         {"skill": "セントリー", "name": "盲目の見張り", "desc": "＜セントリー＞発動時、ロープタレットを召喚する。タレットは周囲の敵を攻撃し、ロープを取り付けて引き寄せる。影響を受けた敵はタレットの射程外に出るとスタンする。"},
-        {"skill": "ノックバック・ショット", "name": "熾烈なる代償", "desc": "＜ノックバック・ショット＞で敵をノックバックした時、与えるダメージが3秒間9.5％増加する（最大28.5%）"}
+        {"skill": "ノックバック・ショット", "name": "熾烈なる代償", "desc": "＜ノックバック・ショット＞で敵をノックバックした時、与えるダメージが3秒間9.5％増加する（最大28.5%）"},
+        {"skill": "大振り", "name": "いじけさせておけ", "desc": "＜大振り＞のクールダウン時間が、命中した敵1体につき0.3秒短縮される。最大0.9秒。"},
+        {"skill": "報復", "name": "君主の血", "desc": "敵が遠くに居るほど＜報復＞のダメージが増加する（最大16%のダメージ増加）"},
+        {"skill": "セントリー", "name": "導星のヴェール", "desc": "＜セントリー＞はプレイヤーが近づくと起動し、メイン攻撃を模倣して敵にダメージを与えるタブレットを2つ召喚する。"},
+        {"skill": "セントリー", "name": "無慈悲なる狩り", "desc": "＜セントリー＞で付近の敵を自動的に射撃するタレットを呼び出す。タレットの近くでスキルを使う度、爆発する投射体を放つ。"}
     ],
     "肩": [
         {"skill": "マルチショット", "name": "ヘイルファイア", "desc": "＜マルチショット＞発動時、2発の誘導ロケット弾を発射し、各ロケット弾が4,018のダメージを与える。"},
@@ -74,7 +78,11 @@ ESSENCES = {
         {"skill": "脱出", "name": "苦難の亡霊", "desc": "＜脱出＞発動時、短距離をローリング移動する。プレイヤーが強化され、メイン攻撃時に同時に２回撃つ。"},
         {"skill": "復讐の雨", "name": "満たされぬ欲望", "desc": "＜復讐の雨＞発動時、狙った範囲に毒矢が3秒間降り注ぎ、範囲内の敵を毒状態にして毎秒18,000ダメージを与える（最大42,336ダメージ）"},
         {"skill": "ナイフの罠", "name": "深手の残響", "desc": "＜ナイフの罠＞が2秒以内に同じ敵に命中すると、ダメージが15.2%上昇する（最大45.6%）"},
-        {"skill": "脱出", "name": "厄災の脱出", "desc": "＜脱出＞発動時、標的の位置に突進し、進路上の敵にダメージを与えてスタンさせる。命中した敵はアーマーが破壊され、プレイヤーから受けるダメージが増加する。"}
+        {"skill": "脱出", "name": "厄災の脱出", "desc": "＜脱出＞発動時、標的の位置に突進し、進路上の敵にダメージを与えてスタンさせる。命中した敵はアーマーが破壊され、プレイヤーから受けるダメージが増加する。"},
+        {"skill": "大振り", "name": "機敏な競争者", "desc": "＜大振り＞発動時、一方的にフックを投げて地面に突き刺したあと、フックに向かって自身を引き寄せながら、進路上に居る敵にダメージを与える。引き寄せられている間、ノックバックと操作障害効果が無効化される。"},
+        {"skill": "マルチショット", "name": "自我の重荷", "desc": "＜マルチショット＞のダメージが敵との距離1ヤードごとに3％ずつ増加する（最大24%）"},
+        {"skill": "マルチショット", "name": "折れ枝", "desc": "＜マルチショット＞が3秒以内に敵に3回命中すると、さらに30,009ダメージを与える。同じ敵に対しては0.2秒に1回しか追加ダメージを与えられない。"},
+        {"skill": "復讐の雨", "name": "気まぐれな奇襲", "desc": "＜復讐の雨＞発動時、標的の位置に断続的に矢の雨を降らせて敵をスタンさせる。ほかのスキルで敵にダメージを与えると自動発動し、その敵を中心に矢の雨が降り注ぐ。"}
     ],
     "胴": [
         {"skill": "ノックバック・ショット", "name": "放埒なる憎悪", "desc": "＜ノックバック・ショット＞発動時、榴弾を発射し、範囲内の敵を爆撃するようになる。"},
@@ -104,7 +112,11 @@ ESSENCES = {
         {"skill": "報復", "name": "残忍なる節制", "desc": "＜報復＞発動時、メイン攻撃が一時的に貫通弾を放つ。"},
         {"skill": "報復", "name": "尽きぬ恨み", "desc": "＜報復＞発動時、猛毒が爆発して付近の敵すべてに11,382ダメージを与え、3秒間毒状態にし、毎秒8,762ダメージを与える。さらに、付近の毒状態の敵に向かって1秒毎に最大4発の貫通矢を放ち、53,272ダメージを与える。"},
         {"skill": "煙幕", "name": "扇動の息吹", "desc": "＜煙幕＞発動時、標的の位置にグレネードを投げて粉塵を発生させ、炎上状態の敵を爆発させる。"},
-        {"skill": "ノックバック・ショット", "name": "汚れなき皮革", "desc": "＜ノックバック・ショット＞発動時、標的の方向に複数の貫通する衝撃波を放ち、敵にダメージを与えてノックバックする。"}
+        {"skill": "ノックバック・ショット", "name": "汚れなき皮革", "desc": "＜ノックバック・ショット＞発動時、標的の方向に複数の貫通する衝撃波を放ち、敵にダメージを与えてノックバックする。"},
+        {"skill": "煙幕", "name": "煙霧の糸", "desc": "＜煙幕＞発動時、プレイヤーが強化され、移動しながら付近の敵にグレネードを投げられるようになる。同じ敵に短期間で別のグレネードをヒットさせると、ダメージが増加する。ダッシュスキルを使用すると、グレネードを投げるのに必要な移動距離が短縮される。"},
+        {"skill": "報復", "name": "純粋なる怒り", "desc": "＜報復＞発動時、＜ピアシング・ショット＞を放ち、効果が切れるまで自身の体をその場に固定する。再び発動させることで新たに＜ピアシング・ショット＞を放ち、ダメージを与えると同時に敵をノックバックさせ、スロウ状態にすうことができる。"},
+        {"skill": "ノックバック・ショット", "name": "道拓きの者", "desc": "＜ノックバック・ショット＞が広がりながらゆっくり移動する投射物を放つ。投射物は継続的に敵をノックバックしダメージを与える。"},
+        {"skill": "報復", "name": "ナイフのクローク", "desc": "＜報復＞で復讐の化身に変身する。操作障害とノックバック効果が無効かされ、スキルダメージが増加して新たにアクティブ・スキルを獲得する。"}
     ],
     "脚": [
         {"skill": "ナイフの罠", "name": "逃れ得ぬ捕食者", "desc": "＜ナイフの罠＞が＜氷結の罠＞になり、爆発すると敵にダメージと冷却効果を与える。"},
@@ -134,7 +146,11 @@ ESSENCES = {
         {"skill": "報復", "name": "犠牲者の怨恨", "desc": "＜報復＞発動時、クリティカルヒット率が2秒間15.2％上昇する。"},
         {"skill": "煙幕", "name": "忍び寄る破滅", "desc": "＜煙幕＞発動時、武器に5秒間毒が込められ、メイン攻撃時に2秒間敵を毒状態にし、毎秒5,302ダメージを与える。毒を込めたメイン攻撃でクリティカルヒットが発生すると猛毒が爆発して42,572ダメージを与える。"},
         {"skill": "ナイフの罠", "name": "火ふき", "desc": "＜ナイフの罠＞発動時、移動式の罠を召喚する。移動式の罠は付近の敵を自動的に攻撃して炎上させる。"},
-        {"skill": "脱出", "name": "曲芸のチャップス", "desc": "完全な制御不能状態やノックバック効果を受けているときにも脱出を使用できるようになる。これにより、0.5秒間、それらの効果を無効化できます。"}
+        {"skill": "脱出", "name": "曲芸のチャップス", "desc": "完全な制御不能状態やノックバック効果を受けているときにも脱出を使用できるようになる。これにより、0.5秒間、それらの効果を無効化できます。"},
+        {"skill": "スピニング・チャクラム", "name": "メニーマーク", "desc": "＜スピニング・チャクラム＞がさらに、命中した敵にチャクラムの印を3秒間付与する。印を付与された敵が3回攻撃を受けると、20,148の追加ダメージを受ける（この効果は同じ敵に対して0.5秒に1回した発動しない）"},
+        {"skill": "報復", "name": "捨てられた枷", "desc": "＜報復＞がダメージを与えると自身から5ヤード以上離れている敵は30,262の追加ダメージを受ける。この効果は同じ敵に対して0.7秒ごとに1回しか発生しない。"},
+        {"skill": "大振り", "name": "糸渡りの徘徊者", "desc": "＜大振り＞のクールダウン時間が15％短縮される。"},
+        {"skill": "報復", "name": "長引く憤怒", "desc": "スキルのクリティカルヒットが発生すると、＜報復＞の持続時間が0.2秒延長される。最大1.6秒。"}
     ],
     "メインハンド": [
         {"skill": "ストレイフ", "name": "騒乱", "desc": "＜ストレイフ＞発動時、誘導ロケットを発射し、各ロケットが付近の敵に5,044のダメージを与える。"},
@@ -165,7 +181,11 @@ ESSENCES = {
         {"skill": "マルチショット", "name": "ねじれた運命", "desc": "＜マルチショット＞発動時、メイン攻撃が一時的に爆発弾を放つ。"},
         {"skill": "煙幕", "name": "頭蓋の絶叫", "desc": "＜煙幕＞によりメイン攻撃速度が3秒間38％上昇する。"},
         {"skill": "煙幕", "name": "陰鬱な使者", "desc": "＜煙幕＞の最大チャージ数が1増加する。"},
-        {"skill": "インペール", "name": "苦難の伝染", "desc": "＜インペール＞発動時、周囲にナイフを放ち、付近の敵の体にナイフを埋め込む。敵をノックバックすると埋め込まれたナイフが引きぬかれ、ランダムの方向に飛ぶ。"}
+        {"skill": "インペール", "name": "苦難の伝染", "desc": "＜インペール＞発動時、周囲にナイフを放ち、付近の敵の体にナイフを埋め込む。敵をノックバックすると埋め込まれたナイフが引きぬかれ、ランダムの方向に飛ぶ。"},
+        {"skill": "煙幕", "name": "惑わす円弧", "desc": "＜煙幕＞がさらに、攻撃速度を3秒間10％上昇させる。"},
+        {"skill": "マルチショット", "name": "天使などいない", "desc": "＜マルチショット＞が自身を強化し、スキルを使う度に追加で矢を一斉に放ち敵にダメージを与える。"},
+        {"skill": "マルチショット", "name": "秘教の悪業者", "desc": "＜マルチショット＞発動時プレイヤーが強化され、メイン攻撃がランダムな敵に大量の追尾型の投射物を放つ。"},
+        {"skill": "復讐の雨", "name": "クイックソーン", "desc": "＜復讐の雨＞により移動速度が2秒間40％上昇する。"}
     ],
     "オフハンド": [
         {"skill": "ストレイフ", "name": "ディスアレイ", "desc": "＜ストレイフ＞の代わりにグレネードを放って爆発させ、1発につき付近の敵すべてにダメージを与える。"},
@@ -195,7 +215,11 @@ ESSENCES = {
         {"skill": "クロスボウ・ショット", "name": "生存者の一撃", "desc": "スキルを使用してから3秒間、＜クロスボウ・ショット＞の次の4発のダメージが57％増加する。"},
         {"skill": "クロスボウ・ショット", "name": "優しい拒絶", "desc": "毒状態の敵に対する＜クロスボウ・ショット＞のダメージが28.5％増加する。"},
         {"skill": "セントリー", "name": "定めのスコーピオン", "desc": "＜セントリー＞が破壊されると小さな爆発が起こり、26,800ダメージを与えて敵を2秒間スタンさせる。"},
-        {"skill": "インペール", "name": "滴る傷口", "desc": "＜インペール＞が同じ敵に命中するたび、ダメージが15.2%ずつ増加していく（最大45.6%）"}
+        {"skill": "インペール", "name": "滴る傷口", "desc": "＜インペール＞が同じ敵に命中するたび、ダメージが15.2%ずつ増加していく（最大45.6%）"},
+        {"skill": "スピニング・チャクラム", "name": "無尽の補給", "desc": "＜スピニング・チャクラム＞発動時、プレイヤーが強化され、移動しながら付近の敵にチャクラムを投げられるようになる。チャクラムが行きだけでなく帰りに敵に当たると追加のダメージを与える。ダッシュスキルを使用すると、チャクラムを投げるのに必要な移動距離が短縮される。"},
+        {"skill": "ノックバック・ショット", "name": "連続砲撃", "desc": "＜ノックバック・ショット＞のダメージが敵との距離1ヤードごとに3％ずつ増加する（最大24％）"},
+        {"skill": "セントリー", "name": "干渉せし恩人", "desc": "＜セントリー＞のタレットは3秒間、メイン攻撃でダメージを与えた敵に対するダメージが15％増加する。"},
+        {"skill": "セントリー", "name": "悪意の考案", "desc": "＜セントリー＞使用時、同スキルのクリティカルヒット率が3秒間5％上昇する。最大20％。"}
     ]
 }
 
@@ -212,7 +236,7 @@ HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>デーモンハンター 精髄チェッカー | Diablo Immortal</title>
+<title>デーモンハンター もぐらリサーチ精髄チェッカー</title>
 <style>
   :root {{
     --bg-primary: #f0f4f8;
@@ -589,6 +613,99 @@ HTML = f"""<!DOCTYPE html>
     .skill-grid {{ grid-template-columns: repeat(2, 1fr); }}
     .header-inner {{ gap: 0.5rem; }}
   }}
+
+  /* ===== 効果検索 ===== */
+  .effect-search-section {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }}
+  .effect-search-actions {{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }}
+  #effect-search-input {{
+    flex: 1;
+    min-width: 220px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }}
+  #effect-search-input:focus {{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }}
+  #effect-search-btn {{
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.48rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+  }}
+  #effect-search-btn:hover {{ transform: translateY(-1px); box-shadow: var(--shadow-md); }}
+  #effect-search-clear-btn {{
+    background: #f1f5f9;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.48rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }}
+  #effect-search-clear-btn:hover {{ background: #e2e8f0; }}
+  #effect-search-results {{ margin-top: 1rem; }}
+  .effect-result-summary {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; }}
+  .effect-result-summary strong {{ color: var(--accent); }}
+  .effect-no-results {{ font-size: 0.82rem; color: var(--text-muted); padding: 0.5rem 0; }}
+  .effect-slot-group {{ margin-bottom: 0.85rem; }}
+  .effect-slot-label {{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }}
+  .effect-essence-card {{
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.55rem 0.65rem;
+    margin-bottom: 0.3rem;
+    background: var(--bg-card);
+    transition: border-color 0.15s;
+  }}
+  .effect-essence-card:hover {{ border-color: var(--border-accent); }}
+  .effect-essence-card:last-child {{ margin-bottom: 0; }}
+  mark.highlight {{
+    background: #fef08a;
+    color: #713f12;
+    border-radius: 2px;
+    padding: 0 1px;
+  }}
 </style>
 </head>
 <body>
@@ -597,7 +714,7 @@ HTML = f"""<!DOCTYPE html>
     <a class="back-btn" href="index.py">← クラス選択</a>
     <div class="header-title">
       <h1>🏹 デーモンハンター 精髄チェッカー</h1>
-      <p>Diablo Immortal — スキルを選択して使用可能な精髄を検索</p>
+      <p>スキルを選択して使用可能な精髄を検索</p>
     </div>
     <div class="header-spacer"></div>
   </div>
@@ -621,6 +738,16 @@ HTML = f"""<!DOCTYPE html>
       <button id="save-bookmark-btn" onclick="saveBookmark()">💾 保存</button>
     </div>
     <div id="bookmark-list"></div>
+  </section>
+
+  <section class="effect-search-section">
+    <h2 class="section-title red">🔎 効果検索</h2>
+    <div class="effect-search-actions">
+      <input type="text" id="effect-search-input" placeholder="効果に含まれるキーワード（例：スタン、冷気、ノックバック）" maxlength="50">
+      <button id="effect-search-btn" onclick="searchByEffect()">🔍 検索</button>
+      <button id="effect-search-clear-btn" onclick="clearEffectSearch()">✕ クリア</button>
+    </div>
+    <div id="effect-search-results"></div>
   </section>
 
   <div class="search-wrap">
@@ -847,6 +974,66 @@ document.getElementById('bookmark-list').addEventListener('click', function(ev) 
   if (del) {{ ev.stopPropagation(); deleteBookmark(parseInt(del.dataset.idx)); return; }}
   const tag = ev.target.closest('.bookmark-tag');
   if (tag) loadBookmark(parseInt(tag.dataset.idx));
+}});
+
+// ===== 効果検索 =====
+function searchByEffect() {{
+  const keyword = document.getElementById('effect-search-input').value.trim();
+  const container = document.getElementById('effect-search-results');
+  if (!keyword) {{
+    container.innerHTML = '<p class="effect-no-results">キーワードを入力してください。</p>';
+    return;
+  }}
+  const kw = keyword.toLowerCase();
+  let totalCount = 0;
+  let html = '';
+  SLOT_ORDER.forEach(slot => {{
+    const matches = ESSENCES[slot].filter(e =>
+      e.name.toLowerCase().includes(kw) ||
+      e.desc.toLowerCase().includes(kw) ||
+      e.skill.toLowerCase().includes(kw)
+    );
+    if (matches.length === 0) return;
+    totalCount += matches.length;
+    html += `<div class="effect-slot-group">
+      <div class="effect-slot-label">${{SLOT_ICONS[slot]}} ${{slot}}&nbsp;(${{matches.length}}件)</div>
+      ${{matches.map(e => `<div class="effect-essence-card">
+        <div class="essence-name">${{hlKw(e.name, keyword)}}</div>
+        <div class="essence-skill">スキル: <span>${{hlKw(e.skill, keyword)}}</span></div>
+        <div class="essence-desc">${{hlKw(e.desc, keyword)}}</div>
+      </div>`).join('')}}
+    </div>`;
+  }});
+  if (totalCount === 0) {{
+    container.innerHTML = `<p class="effect-no-results">「${{keyword}}」に一致する精髄は見つかりませんでした。</p>`;
+    return;
+  }}
+  container.innerHTML =
+    `<p class="effect-result-summary">「<strong>${{keyword}}</strong>」を含む精髄: <strong>${{totalCount}}件</strong></p>` + html;
+  container.scrollIntoView({{behavior: 'smooth', block: 'nearest'}});
+}}
+
+function hlKw(text, kw) {{
+  if (!kw || !text) return text || '';
+  const lower = text.toLowerCase();
+  const kwLower = kw.toLowerCase();
+  let result = '';
+  let lastIdx = 0;
+  let idx;
+  while ((idx = lower.indexOf(kwLower, lastIdx)) !== -1) {{
+    result += text.slice(lastIdx, idx) + '<mark class="highlight">' + text.slice(idx, idx + kw.length) + '</mark>';
+    lastIdx = idx + kw.length;
+  }}
+  return result + text.slice(lastIdx);
+}}
+
+function clearEffectSearch() {{
+  document.getElementById('effect-search-input').value = '';
+  document.getElementById('effect-search-results').innerHTML = '';
+}}
+
+document.getElementById('effect-search-input').addEventListener('keydown', function(ev) {{
+  if (ev.key === 'Enter') searchByEffect();
 }});
 
 buildSkillGrid();

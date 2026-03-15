@@ -11,7 +11,7 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>精髄チェッカー | Diablo Immortal</title>
+<title>もぐらリサーチ精髄チェッカー</title>
 <style>
   :root {
     --bg: #f0f4f8;
@@ -91,6 +91,8 @@ HTML = """<!DOCTYPE html>
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    min-height: 220px;
     gap: 0.75rem;
     position: relative;
     overflow: hidden;
@@ -182,7 +184,7 @@ HTML = """<!DOCTYPE html>
 <body>
 <header>
   <h1>⚔️ 精髄チェッカー</h1>
-  <p>Diablo Immortal — クラスを選択してスキルと精髄を検索</p>
+  <p>クラスを選択してスキルと精髄を検索</p>
 </header>
 
 <main>
@@ -190,99 +192,90 @@ HTML = """<!DOCTYPE html>
   <div class="class-grid">
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/ウィザード.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/ウィザード.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">ウィザード</div>
         <div class="class-name-en">Wizard</div>
       </div>
-      <div class="class-desc">強力な呪文で敵を殲滅する<br>遠距離魔法クラス</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/バーバリアン.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/バーバリアン.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">バーバリアン</div>
         <div class="class-name-en">Barbarian</div>
       </div>
-      <div class="class-desc">圧倒的な力で敵を粉砕する<br>最強の近接戦士</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
 
     <a class="class-card" href="monk.py" style="--class-color:#f59e0b;">
-      <div class="class-icon"><img src="/images/モンク.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/モンク.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">モンク</div>
         <div class="class-name-en">Monk</div>
       </div>
-      <div class="class-desc">武道と精神力で戦う<br>近接戦闘の達人</div>
       <span class="badge badge-available">利用可能</span>
     </a>
 
     <a class="class-card" href="demonhunter.py" style="--class-color:#dc2626;">
-      <div class="class-icon"><img src="/images/デーモン・ハンター.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/デーモン・ハンター.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">デーモンハンター</div>
         <div class="class-name-en">Demon Hunter</div>
       </div>
-      <div class="class-desc">弓と罠で敵を仕留める<br>遠距離戦闘のスペシャリスト</div>
       <span class="badge badge-available">利用可能</span>
     </a>
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/クルセイダー.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/クルセイダー.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">クルセイダー</div>
         <div class="class-name-en">Crusader</div>
       </div>
-      <div class="class-desc">信仰の力で敵を薙ぎ払う<br>重装備の聖戦士</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/ネクロマンサー.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/ネクロマンサー.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">ネクロマンサー</div>
         <div class="class-name-en">Necromancer</div>
       </div>
-      <div class="class-desc">アンデッドの軍団を率いる<br>死霊術師</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/ブラッド・ナイト.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/ブラッド・ナイト.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">ブラッド・ナイト</div>
-        <div class="class-name-en">Tempest</div>
+        <div class="class-name-en">Blood Knight</div>
       </div>
-      <div class="class-desc">人間離れした守護者。その体には呪われた吸血鬼の力が宿っており、敵の血を取って騎士の槍で切り刻む</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
 
     <a class="class-card" href="tempest.py" style="--class-color:#0077b6;">
-      <div class="class-icon"><img src="/images/テンペスト.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/テンペスト.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">テンペスト</div>
         <div class="class-name-en">Tempest</div>
       </div>
-      <div class="class-desc">風と水を操る<br>新クラス・近接支援型</div>
       <span class="badge badge-available">利用可能</span>
     </a>
 
     <div class="class-card coming-soon" style="--class-color:#9ca3af;">
-      <div class="class-icon"><img src="/images/ドルイド.png" style="width: 50px;"/></div>
+      <div class="class-icon"><img src="/images/ドルイド.png" style="height: 70px;"/></div>
       <div>
         <div class="class-name">ドルイド</div>
         <div class="class-name-en">Druid</div>
       </div>
-      <div class="class-desc">自然の力と変身能力を持つ<br>形態変化の達人</div>
       <span class="badge badge-soon">近日追加</span>
     </div>
   </div>
 </main>
 
 <footer>
-  Diablo Immortal 精髄チェッカー
+  精髄チェッカー
 </footer>
 </body>
 </html>"""

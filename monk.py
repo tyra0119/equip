@@ -139,7 +139,7 @@ HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>モンク 精髄チェッカー | Diablo Immortal</title>
+<title>モンク もぐらリサーチ精髄チェッカー</title>
 <style>
   :root {{
     --bg-primary: #f0f4f8;
@@ -516,6 +516,99 @@ HTML = f"""<!DOCTYPE html>
     .skill-grid {{ grid-template-columns: repeat(2, 1fr); }}
     .header-inner {{ gap: 0.5rem; }}
   }}
+
+  /* ===== 効果検索 ===== */
+  .effect-search-section {{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }}
+  .effect-search-actions {{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }}
+  #effect-search-input {{
+    flex: 1;
+    min-width: 220px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }}
+  #effect-search-input:focus {{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }}
+  #effect-search-btn {{
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.48rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+  }}
+  #effect-search-btn:hover {{ transform: translateY(-1px); box-shadow: var(--shadow-md); }}
+  #effect-search-clear-btn {{
+    background: #f1f5f9;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 0.48rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }}
+  #effect-search-clear-btn:hover {{ background: #e2e8f0; }}
+  #effect-search-results {{ margin-top: 1rem; }}
+  .effect-result-summary {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; }}
+  .effect-result-summary strong {{ color: var(--accent); }}
+  .effect-no-results {{ font-size: 0.82rem; color: var(--text-muted); padding: 0.5rem 0; }}
+  .effect-slot-group {{ margin-bottom: 0.85rem; }}
+  .effect-slot-label {{
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }}
+  .effect-essence-card {{
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.55rem 0.65rem;
+    margin-bottom: 0.3rem;
+    background: var(--bg-card);
+    transition: border-color 0.15s;
+  }}
+  .effect-essence-card:hover {{ border-color: var(--border-accent); }}
+  .effect-essence-card:last-child {{ margin-bottom: 0; }}
+  mark.highlight {{
+    background: #fef08a;
+    color: #713f12;
+    border-radius: 2px;
+    padding: 0 1px;
+  }}
 </style>
 </head>
 <body>
@@ -524,7 +617,7 @@ HTML = f"""<!DOCTYPE html>
     <a class="back-btn" href="index.py">← クラス選択</a>
     <div class="header-title">
       <h1>👊 モンク 精髄チェッカー</h1>
-      <p>Diablo Immortal — スキルを選択して使用可能な精髄を検索</p>
+      <p>スキルを選択して使用可能な精髄を検索</p>
     </div>
     <div class="header-spacer"></div>
   </div>
@@ -548,6 +641,16 @@ HTML = f"""<!DOCTYPE html>
       <button id="save-bookmark-btn" onclick="saveBookmark()">💾 保存</button>
     </div>
     <div id="bookmark-list"></div>
+  </section>
+
+  <section class="effect-search-section">
+    <h2 class="section-title amber">🔎 効果検索</h2>
+    <div class="effect-search-actions">
+      <input type="text" id="effect-search-input" placeholder="効果に含まれるキーワード（例：スタン、冷気、ノックバック）" maxlength="50">
+      <button id="effect-search-btn" onclick="searchByEffect()">🔍 検索</button>
+      <button id="effect-search-clear-btn" onclick="clearEffectSearch()">✕ クリア</button>
+    </div>
+    <div id="effect-search-results"></div>
   </section>
 
   <div class="search-wrap">
@@ -774,6 +877,66 @@ document.getElementById('bookmark-list').addEventListener('click', function(ev) 
   if (del) {{ ev.stopPropagation(); deleteBookmark(parseInt(del.dataset.idx)); return; }}
   const tag = ev.target.closest('.bookmark-tag');
   if (tag) loadBookmark(parseInt(tag.dataset.idx));
+}});
+
+// ===== 効果検索 =====
+function searchByEffect() {{
+  const keyword = document.getElementById('effect-search-input').value.trim();
+  const container = document.getElementById('effect-search-results');
+  if (!keyword) {{
+    container.innerHTML = '<p class="effect-no-results">キーワードを入力してください。</p>';
+    return;
+  }}
+  const kw = keyword.toLowerCase();
+  let totalCount = 0;
+  let html = '';
+  SLOT_ORDER.forEach(slot => {{
+    const matches = ESSENCES[slot].filter(e =>
+      e.name.toLowerCase().includes(kw) ||
+      e.desc.toLowerCase().includes(kw) ||
+      e.skill.toLowerCase().includes(kw)
+    );
+    if (matches.length === 0) return;
+    totalCount += matches.length;
+    html += `<div class="effect-slot-group">
+      <div class="effect-slot-label">${{SLOT_ICONS[slot]}} ${{slot}}&nbsp;(${{matches.length}}件)</div>
+      ${{matches.map(e => `<div class="effect-essence-card">
+        <div class="essence-name">${{hlKw(e.name, keyword)}}</div>
+        <div class="essence-skill">スキル: <span>${{hlKw(e.skill, keyword)}}</span></div>
+        <div class="essence-desc">${{hlKw(e.desc, keyword)}}</div>
+      </div>`).join('')}}
+    </div>`;
+  }});
+  if (totalCount === 0) {{
+    container.innerHTML = `<p class="effect-no-results">「${{keyword}}」に一致する精髄は見つかりませんでした。</p>`;
+    return;
+  }}
+  container.innerHTML =
+    `<p class="effect-result-summary">「<strong>${{keyword}}</strong>」を含む精髄: <strong>${{totalCount}}件</strong></p>` + html;
+  container.scrollIntoView({{behavior: 'smooth', block: 'nearest'}});
+}}
+
+function hlKw(text, kw) {{
+  if (!kw || !text) return text || '';
+  const lower = text.toLowerCase();
+  const kwLower = kw.toLowerCase();
+  let result = '';
+  let lastIdx = 0;
+  let idx;
+  while ((idx = lower.indexOf(kwLower, lastIdx)) !== -1) {{
+    result += text.slice(lastIdx, idx) + '<mark class="highlight">' + text.slice(idx, idx + kw.length) + '</mark>';
+    lastIdx = idx + kw.length;
+  }}
+  return result + text.slice(lastIdx);
+}}
+
+function clearEffectSearch() {{
+  document.getElementById('effect-search-input').value = '';
+  document.getElementById('effect-search-results').innerHTML = '';
+}}
+
+document.getElementById('effect-search-input').addEventListener('keydown', function(ev) {{
+  if (ev.key === 'Enter') searchByEffect();
 }});
 
 buildSkillGrid();
