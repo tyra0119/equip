@@ -1004,8 +1004,12 @@ function saveBookmark() {{
   for (let i = 1; i <= 5; i++) {{
     skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
   }}
+  const essences = {{}};
+  SLOT_ORDER.forEach(slot => {{
+    essences[slot] = selected[slot].map(e => e.name);
+  }});
   const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
-  bookmarks.push({{ name, skills, date: new Date().toLocaleDateString('ja-JP') }});
+  bookmarks.push({{ name, skills, essences, date: new Date().toLocaleDateString('ja-JP') }});
   localStorage.setItem('tempest_bookmarks', JSON.stringify(bookmarks));
   nameInput.value = '';
   renderBookmarks();
@@ -1021,6 +1025,21 @@ function loadBookmark(idx) {{
   }}
   onSkillChange();
   doSearch();
+
+  if (bm.essences) {{
+    SLOT_ORDER.forEach(slot => {{
+      const names = bm.essences[slot] || [];
+      selected[slot] = currentEssences[slot].filter(e => names.includes(e.name));
+      const container = document.getElementById(`essences-${{slot}}`);
+      if (container) container.innerHTML = renderEssenceList(slot, currentEssences[slot]);
+      const limitEl = document.getElementById(`limit-${{slot}}`);
+      if (limitEl) {{
+        limitEl.textContent = `選択: ${{selected[slot].length}}/${{LIMITS[slot]}}`;
+        limitEl.className = `slot-limit${{selected[slot].length >= LIMITS[slot] ? ' at-limit' : ''}}`;
+      }}
+    }});
+    refreshSelectedPanel();
+  }}
 }}
 
 function deleteBookmark(idx) {{
