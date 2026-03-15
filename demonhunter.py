@@ -224,7 +224,7 @@ ESSENCES = {
 }
 
 SLOT_LIMITS = {"頭": 1, "肩": 1, "胴": 1, "脚": 1, "メインハンド": 2, "オフハンド": 2}
-SLOT_ICONS = {"頭": "🪖", "肩": "🦺", "胴": "🛡️", "脚": "👟", "メインハンド": "🏹", "オフハンド": "🗡️"}
+SLOT_ICONS = {"頭": "🪖", "肩": "🦺", "胴": "🛡️", "脚": "👟", "メインハンド": "⚔️", "オフハンド": "🗡️"}
 
 essences_json = json.dumps(ESSENCES, ensure_ascii=False)
 limits_json = json.dumps(SLOT_LIMITS, ensure_ascii=False)
@@ -242,24 +242,24 @@ HTML = f"""<!DOCTYPE html>
     --bg-primary: #f0f4f8;
     --bg-secondary: #ffffff;
     --bg-card: #ffffff;
-    --bg-card-hover: #f7fafc;
-    --accent: #dc2626;
-    --accent-glow: rgba(220,38,38,0.18);
-    --accent2: #7c3aed;
+    --bg-card-hover: #fffbeb;
+    --accent: #d97706;
+    --accent-glow: rgba(217,119,6,0.18);
+    --accent2: #b45309;
     --gold: #d97706;
-    --gold-dark: #b45309;
+    --gold-dark: #92400e;
     --text-primary: #1a202c;
     --text-secondary: #4a5568;
     --text-muted: #a0aec0;
     --border: #e2e8f0;
-    --border-accent: rgba(220,38,38,0.3);
-    --selected-bg: rgba(220,38,38,0.07);
-    --selected-border: #dc2626;
+    --border-accent: rgba(217,119,6,0.3);
+    --selected-bg: rgba(217,119,6,0.07);
+    --selected-border: #d97706;
     --slot-head: #dc2626;
     --slot-shoulder: #9333ea;
     --slot-chest: #2563eb;
     --slot-legs: #0d9488;
-    --slot-main: #ea580c;
+    --slot-main: #d97706;
     --slot-off: #db2777;
     --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
@@ -273,7 +273,7 @@ HTML = f"""<!DOCTYPE html>
     line-height: 1.6;
   }}
   header {{
-    background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+    background: linear-gradient(135deg, #713f12 0%, #422006 100%);
     border-bottom: 2px solid rgba(255,255,255,0.08);
     padding: 0.85rem 1.5rem;
     position: sticky;
@@ -309,7 +309,7 @@ HTML = f"""<!DOCTYPE html>
   .header-title h1 {{
     font-size: clamp(0.95rem, 2.5vw, 1.3rem);
     font-weight: 700;
-    background: linear-gradient(90deg, #fca5a5, #fde68a);
+    background: linear-gradient(90deg, #fde68a, #fed7aa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -319,7 +319,7 @@ HTML = f"""<!DOCTYPE html>
   .header-spacer {{ width: 80px; }}
 
   #selected-panel {{
-    background: linear-gradient(135deg, #fff1f2, #fdf4ff);
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
     border-bottom: 2px solid var(--border);
     padding: 0.75rem 1.5rem;
     display: none;
@@ -341,8 +341,8 @@ HTML = f"""<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(180,83,9,0.08);
-    border: 1px solid rgba(180,83,9,0.3);
+    background: rgba(146,64,14,0.08);
+    border: 1px solid rgba(146,64,14,0.3);
     border-radius: 20px;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
@@ -350,7 +350,7 @@ HTML = f"""<!DOCTYPE html>
     transition: all 0.2s;
     color: var(--text-primary);
   }}
-  .selected-tag:hover {{ background: rgba(180,83,9,0.15); }}
+  .selected-tag:hover {{ background: rgba(146,64,14,0.15); }}
   .selected-tag .slot-badge {{ font-size: 0.65rem; opacity: 0.7; }}
   .selected-tag .remove-btn {{ opacity: 0.45; font-size: 0.8rem; margin-left: 0.2rem; }}
   .selected-tag:hover .remove-btn {{ opacity: 1; }}
@@ -377,7 +377,7 @@ HTML = f"""<!DOCTYPE html>
     align-items: center;
     gap: 0.5rem;
   }}
-  .section-title.red {{ color: var(--accent); }}
+  .section-title.amber {{ color: var(--accent); }}
   .section-title.gold {{ color: var(--gold-dark); }}
   .section-title::before {{
     content: '';
@@ -411,7 +411,7 @@ HTML = f"""<!DOCTYPE html>
     transition: border-color 0.2s, box-shadow 0.2s;
     width: 100%;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23dc2626'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23d97706'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     box-shadow: var(--shadow);
@@ -485,7 +485,7 @@ HTML = f"""<!DOCTYPE html>
 
   .search-wrap {{ text-align: center; margin: 1.25rem 0; }}
   #search-btn {{
-    background: linear-gradient(135deg, #b91c1c, var(--accent2));
+    background: linear-gradient(135deg, #92400e, var(--accent));
     color: white;
     border: none;
     border-radius: 30px;
@@ -495,7 +495,7 @@ HTML = f"""<!DOCTYPE html>
     cursor: pointer;
     letter-spacing: 0.05em;
     transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+    box-shadow: 0 4px 20px rgba(217,119,6,0.3);
     position: relative;
     overflow: hidden;
   }}
@@ -508,7 +508,7 @@ HTML = f"""<!DOCTYPE html>
     transition: left 0.5s;
   }}
   #search-btn:hover::before {{ left: 100%; }}
-  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(220,38,38,0.45); }}
+  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(217,119,6,0.45); }}
   #search-btn:active {{ transform: translateY(0); }}
 
   #results {{ display: none; }}
@@ -556,7 +556,7 @@ HTML = f"""<!DOCTYPE html>
     color: var(--text-secondary);
     white-space: nowrap;
   }}
-  .slot-limit.at-limit {{ background: rgba(220,38,38,0.1); color: var(--accent); font-weight: 700; }}
+  .slot-limit.at-limit {{ background: rgba(217,119,6,0.1); color: var(--accent); font-weight: 700; }}
   .slot-essences {{ padding: 0.4rem; }}
   .essence-count {{ font-size: 0.68rem; color: var(--text-muted); padding: 0.25rem 0.4rem; text-align: right; }}
   .no-essences {{ padding: 1.25rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; }}
@@ -571,7 +571,7 @@ HTML = f"""<!DOCTYPE html>
     user-select: none;
   }}
   .essence-card:last-child {{ margin-bottom: 0; }}
-  .essence-card:hover {{ background: #fff1f2; border-color: rgba(220,38,38,0.2); }}
+  .essence-card:hover {{ background: #fffbeb; border-color: rgba(217,119,6,0.2); }}
   .essence-card.selected {{
     background: var(--selected-bg);
     border-color: var(--selected-border);
@@ -593,7 +593,7 @@ HTML = f"""<!DOCTYPE html>
   .essence-skill {{ font-size: 0.68rem; color: var(--text-muted); margin-bottom: 0.25rem; }}
   .essence-skill span {{
     color: var(--accent);
-    background: rgba(220,38,38,0.07);
+    background: rgba(217,119,6,0.07);
     padding: 0.08rem 0.35rem;
     border-radius: 4px;
     font-weight: 600;
@@ -709,11 +709,12 @@ HTML = f"""<!DOCTYPE html>
 </style>
 </head>
 <body>
+
 <header>
   <div class="header-inner">
     <a class="back-btn" href="index.py">← クラス選択</a>
     <div class="header-title">
-      <h1>🏹 デーモンハンター 精髄チェッカー</h1>
+      <h1>デーモンハンター 精髄チェッカー</h1>
       <p>スキルを選択して使用可能な精髄を検索</p>
     </div>
     <div class="header-spacer"></div>
@@ -727,7 +728,7 @@ HTML = f"""<!DOCTYPE html>
 
 <main>
   <section class="skill-section">
-    <h2 class="section-title red">スキル選択</h2>
+    <h2 class="section-title amber">スキル選択</h2>
     <div class="skill-grid" id="skill-grid"></div>
   </section>
 
@@ -741,7 +742,7 @@ HTML = f"""<!DOCTYPE html>
   </section>
 
   <section class="effect-search-section">
-    <h2 class="section-title red">🔎 効果検索</h2>
+    <h2 class="section-title amber">🔎 効果検索</h2>
     <div class="effect-search-actions">
       <input type="text" id="effect-search-input" placeholder="効果に含まれるキーワード（例：スタン、冷気、ノックバック）" maxlength="50">
       <button id="effect-search-btn" onclick="searchByEffect()">🔍 検索</button>
@@ -755,6 +756,9 @@ HTML = f"""<!DOCTYPE html>
   </div>
 
   <div id="results">
+    <div id="results-header">
+      <h2>使用可能な精髄一覧</h2>
+    </div>
     <p class="tooltip-hint">精髄をクリックして選択（頭・肩・胴・脚：各1つ、メインハンド・オフハンド：各2つまで）</p>
     <div class="slots-grid" id="slots-grid"></div>
   </div>
@@ -765,15 +769,20 @@ const ESSENCES = {essences_json};
 const LIMITS = {limits_json};
 const MAIN_ATTACKS = {main_attacks_json};
 const SKILLS = {skills_json};
-const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"🏹","オフハンド":"🗡️"}};
+const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"⚔️","オフハンド":"🗡️"}};
 const SLOT_ORDER = ["頭","肩","胴","脚","メインハンド","オフハンド"];
 const BM_KEY = 'demonhunter_bookmarks';
 
+
+// 現在表示中の精髄データ（スロットごと）
 let currentEssences = {{}};
 SLOT_ORDER.forEach(s => currentEssences[s] = []);
+
+// 選択済み精髄
 const selected = {{}};
 SLOT_ORDER.forEach(s => selected[s] = []);
 
+// ===== スキルグリッド構築 =====
 function buildSkillGrid() {{
   const grid = document.getElementById('skill-grid');
   const slots = [
@@ -790,6 +799,7 @@ function buildSkillGrid() {{
       </select>`;
     grid.appendChild(div);
   }});
+  // イベントリスナー設定
   grid.querySelectorAll('select').forEach(sel => sel.addEventListener('change', onSkillChange));
 }}
 
@@ -818,21 +828,26 @@ function onSkillChange() {{
   document.getElementById('main').classList.toggle('has-value', !!document.getElementById('main').value);
 }}
 
+// ===== 検索 =====
 function doSearch() {{
   const skills = getSelectedSkills();
   const slotsGrid = document.getElementById('slots-grid');
   slotsGrid.innerHTML = '';
+
   SLOT_ORDER.forEach(slot => {{
     currentEssences[slot] = ESSENCES[slot].filter(e => skills.includes(e.skill));
   }});
+
   SLOT_ORDER.forEach((slot, idx) => {{
     const essences = currentEssences[slot];
     const card = document.createElement('div');
     card.className = 'slot-card';
     card.dataset.slot = slot;
     card.style.animationDelay = `${{idx * 0.03}}s`;
+
     const limit = LIMITS[slot];
     const selCount = selected[slot].length;
+
     card.innerHTML = `
       <div class="slot-header">
         <div class="slot-title">${{SLOT_ICONS[slot]}} ${{slot}}</div>
@@ -843,6 +858,7 @@ function doSearch() {{
       </div>`;
     slotsGrid.appendChild(card);
   }});
+
   document.getElementById('results').style.display = 'block';
   document.getElementById('results').scrollIntoView({{behavior:'smooth', block:'start'}});
   refreshSelectedPanel();
@@ -858,13 +874,18 @@ function renderEssence(slot, e, idx) {{
   const isSelected = selected[slot].some(s => s.name === e.name);
   const atLimit = selected[slot].length >= LIMITS[slot];
   const isDisabled = !isSelected && atLimit;
-  return `<div class="essence-card${{isSelected ? ' selected' : ''}}${{isDisabled ? ' disabled' : ''}}" data-slot="${{slot}}" data-index="${{idx}}">
-    <div class="essence-name"><span class="check-icon">✓</span>${{e.name}}</div>
+  return `<div class="essence-card${{isSelected ? ' selected' : ''}}${{isDisabled ? ' disabled' : ''}}"
+    data-slot="${{slot}}" data-index="${{idx}}">
+    <div class="essence-name">
+      <span class="check-icon">✓</span>
+      ${{e.name}}
+    </div>
     <div class="essence-skill">スキル: <span>${{e.skill}}</span></div>
     <div class="essence-desc">${{e.desc}}</div>
   </div>`;
 }}
 
+// ===== イベントデリゲーション（精髄カード選択） =====
 document.getElementById('slots-grid').addEventListener('click', function(ev) {{
   const card = ev.target.closest('.essence-card');
   if (!card || card.classList.contains('disabled')) return;
@@ -883,6 +904,7 @@ function toggleEssence(slot, e) {{
     if (selected[slot].length >= LIMITS[slot]) return;
     selected[slot].push(e);
   }}
+  // スロットの表示を更新
   const essences = currentEssences[slot];
   const container = document.getElementById(`essences-${{slot}}`);
   if (!container) return;
@@ -896,11 +918,15 @@ function toggleEssence(slot, e) {{
   refreshSelectedPanel();
 }}
 
+// ===== 選択パネル更新 =====
 function refreshSelectedPanel() {{
   const panel = document.getElementById('selected-panel');
   const list = document.getElementById('selected-list');
   const allSelected = SLOT_ORDER.flatMap(slot => selected[slot].map(e => ({{...e, slot}})));
-  if (allSelected.length === 0) {{ panel.style.display = 'none'; return; }}
+  if (allSelected.length === 0) {{
+    panel.style.display = 'none';
+    return;
+  }}
   panel.style.display = 'block';
   list.innerHTML = allSelected.map(e => `
     <div class="selected-tag" data-slot="${{e.slot}}" data-name="${{encodeURIComponent(e.name)}}">
@@ -910,6 +936,7 @@ function refreshSelectedPanel() {{
     </div>`).join('');
 }}
 
+// selected-tag クリック（イベントデリゲーション）
 document.getElementById('selected-list').addEventListener('click', function(ev) {{
   const tag = ev.target.closest('.selected-tag');
   if (!tag) return;
@@ -919,6 +946,7 @@ document.getElementById('selected-list').addEventListener('click', function(ev) 
   if (essence) toggleEssence(slot, essence);
 }});
 
+// ===== ブックマーク機能 =====
 function saveBookmark() {{
   const nameInput = document.getElementById('bookmark-name-input');
   const name = nameInput.value.trim();
@@ -929,7 +957,9 @@ function saveBookmark() {{
     return;
   }}
   const skills = {{ main: document.getElementById('main').value }};
-  for (let i = 1; i <= 5; i++) skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
+  for (let i = 1; i <= 5; i++) {{
+    skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
+  }}
   const essences = {{}};
   SLOT_ORDER.forEach(slot => {{
     essences[slot] = selected[slot].map(e => e.name);
@@ -946,7 +976,9 @@ function loadBookmark(idx) {{
   const bm = bookmarks[idx];
   if (!bm) return;
   document.getElementById('main').value = bm.skills.main || '';
-  for (let i = 1; i <= 5; i++) document.getElementById(`skill${{i}}`).value = bm.skills[`skill${{i}}`] || '';
+  for (let i = 1; i <= 5; i++) {{
+    document.getElementById(`skill${{i}}`).value = bm.skills[`skill${{i}}`] || '';
+  }}
   onSkillChange();
   doSearch();
 
@@ -988,9 +1020,14 @@ function renderBookmarks() {{
     </div>`).join('');
 }}
 
+// ブックマーク クリック（イベントデリゲーション）
 document.getElementById('bookmark-list').addEventListener('click', function(ev) {{
   const del = ev.target.closest('.bm-delete');
-  if (del) {{ ev.stopPropagation(); deleteBookmark(parseInt(del.dataset.idx)); return; }}
+  if (del) {{
+    ev.stopPropagation();
+    deleteBookmark(parseInt(del.dataset.idx));
+    return;
+  }}
   const tag = ev.target.closest('.bookmark-tag');
   if (tag) loadBookmark(parseInt(tag.dataset.idx));
 }});
@@ -1055,6 +1092,7 @@ document.getElementById('effect-search-input').addEventListener('keydown', funct
   if (ev.key === 'Enter') searchByEffect();
 }});
 
+// ===== 初期化 =====
 buildSkillGrid();
 renderBookmarks();
 </script>

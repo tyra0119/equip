@@ -127,7 +127,7 @@ ESSENCES = {
 }
 
 SLOT_LIMITS = {"頭": 1, "肩": 1, "胴": 1, "脚": 1, "メインハンド": 2, "オフハンド": 2}
-SLOT_ICONS = {"頭": "🪖", "肩": "🦺", "胴": "🛡️", "脚": "👟", "メインハンド": "👊", "オフハンド": "🪬"}
+SLOT_ICONS = {"頭": "🪖", "肩": "🦺", "胴": "🛡️", "脚": "👟", "メインハンド": "⚔️", "オフハンド": "🗡️"}
 
 essences_json = json.dumps(ESSENCES, ensure_ascii=False)
 limits_json = json.dumps(SLOT_LIMITS, ensure_ascii=False)
@@ -612,11 +612,12 @@ HTML = f"""<!DOCTYPE html>
 </style>
 </head>
 <body>
+
 <header>
   <div class="header-inner">
     <a class="back-btn" href="index.py">← クラス選択</a>
     <div class="header-title">
-      <h1>👊 モンク 精髄チェッカー</h1>
+      <h1>モンク 精髄チェッカー</h1>
       <p>スキルを選択して使用可能な精髄を検索</p>
     </div>
     <div class="header-spacer"></div>
@@ -658,6 +659,9 @@ HTML = f"""<!DOCTYPE html>
   </div>
 
   <div id="results">
+    <div id="results-header">
+      <h2>使用可能な精髄一覧</h2>
+    </div>
     <p class="tooltip-hint">精髄をクリックして選択（頭・肩・胴・脚：各1つ、メインハンド・オフハンド：各2つまで）</p>
     <div class="slots-grid" id="slots-grid"></div>
   </div>
@@ -668,15 +672,20 @@ const ESSENCES = {essences_json};
 const LIMITS = {limits_json};
 const MAIN_ATTACKS = {main_attacks_json};
 const SKILLS = {skills_json};
-const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"👊","オフハンド":"🪬"}};
+const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"⚔️","オフハンド":"🗡️"}};
 const SLOT_ORDER = ["頭","肩","胴","脚","メインハンド","オフハンド"];
 const BM_KEY = 'monk_bookmarks';
 
+
+// 現在表示中の精髄データ（スロットごと）
 let currentEssences = {{}};
 SLOT_ORDER.forEach(s => currentEssences[s] = []);
+
+// 選択済み精髄
 const selected = {{}};
 SLOT_ORDER.forEach(s => selected[s] = []);
 
+// ===== スキルグリッド構築 =====
 function buildSkillGrid() {{
   const grid = document.getElementById('skill-grid');
   const slots = [
@@ -693,6 +702,7 @@ function buildSkillGrid() {{
       </select>`;
     grid.appendChild(div);
   }});
+  // イベントリスナー設定
   grid.querySelectorAll('select').forEach(sel => sel.addEventListener('change', onSkillChange));
 }}
 
@@ -721,21 +731,26 @@ function onSkillChange() {{
   document.getElementById('main').classList.toggle('has-value', !!document.getElementById('main').value);
 }}
 
+// ===== 検索 =====
 function doSearch() {{
   const skills = getSelectedSkills();
   const slotsGrid = document.getElementById('slots-grid');
   slotsGrid.innerHTML = '';
+
   SLOT_ORDER.forEach(slot => {{
     currentEssences[slot] = ESSENCES[slot].filter(e => skills.includes(e.skill));
   }});
+
   SLOT_ORDER.forEach((slot, idx) => {{
     const essences = currentEssences[slot];
     const card = document.createElement('div');
     card.className = 'slot-card';
     card.dataset.slot = slot;
     card.style.animationDelay = `${{idx * 0.03}}s`;
+
     const limit = LIMITS[slot];
     const selCount = selected[slot].length;
+
     card.innerHTML = `
       <div class="slot-header">
         <div class="slot-title">${{SLOT_ICONS[slot]}} ${{slot}}</div>
@@ -746,6 +761,7 @@ function doSearch() {{
       </div>`;
     slotsGrid.appendChild(card);
   }});
+
   document.getElementById('results').style.display = 'block';
   document.getElementById('results').scrollIntoView({{behavior:'smooth', block:'start'}});
   refreshSelectedPanel();
@@ -761,13 +777,18 @@ function renderEssence(slot, e, idx) {{
   const isSelected = selected[slot].some(s => s.name === e.name);
   const atLimit = selected[slot].length >= LIMITS[slot];
   const isDisabled = !isSelected && atLimit;
-  return `<div class="essence-card${{isSelected ? ' selected' : ''}}${{isDisabled ? ' disabled' : ''}}" data-slot="${{slot}}" data-index="${{idx}}">
-    <div class="essence-name"><span class="check-icon">✓</span>${{e.name}}</div>
+  return `<div class="essence-card${{isSelected ? ' selected' : ''}}${{isDisabled ? ' disabled' : ''}}"
+    data-slot="${{slot}}" data-index="${{idx}}">
+    <div class="essence-name">
+      <span class="check-icon">✓</span>
+      ${{e.name}}
+    </div>
     <div class="essence-skill">スキル: <span>${{e.skill}}</span></div>
     <div class="essence-desc">${{e.desc}}</div>
   </div>`;
 }}
 
+// ===== イベントデリゲーション（精髄カード選択） =====
 document.getElementById('slots-grid').addEventListener('click', function(ev) {{
   const card = ev.target.closest('.essence-card');
   if (!card || card.classList.contains('disabled')) return;
@@ -786,6 +807,7 @@ function toggleEssence(slot, e) {{
     if (selected[slot].length >= LIMITS[slot]) return;
     selected[slot].push(e);
   }}
+  // スロットの表示を更新
   const essences = currentEssences[slot];
   const container = document.getElementById(`essences-${{slot}}`);
   if (!container) return;
@@ -799,11 +821,15 @@ function toggleEssence(slot, e) {{
   refreshSelectedPanel();
 }}
 
+// ===== 選択パネル更新 =====
 function refreshSelectedPanel() {{
   const panel = document.getElementById('selected-panel');
   const list = document.getElementById('selected-list');
   const allSelected = SLOT_ORDER.flatMap(slot => selected[slot].map(e => ({{...e, slot}})));
-  if (allSelected.length === 0) {{ panel.style.display = 'none'; return; }}
+  if (allSelected.length === 0) {{
+    panel.style.display = 'none';
+    return;
+  }}
   panel.style.display = 'block';
   list.innerHTML = allSelected.map(e => `
     <div class="selected-tag" data-slot="${{e.slot}}" data-name="${{encodeURIComponent(e.name)}}">
@@ -813,6 +839,7 @@ function refreshSelectedPanel() {{
     </div>`).join('');
 }}
 
+// selected-tag クリック（イベントデリゲーション）
 document.getElementById('selected-list').addEventListener('click', function(ev) {{
   const tag = ev.target.closest('.selected-tag');
   if (!tag) return;
@@ -822,6 +849,7 @@ document.getElementById('selected-list').addEventListener('click', function(ev) 
   if (essence) toggleEssence(slot, essence);
 }});
 
+// ===== ブックマーク機能 =====
 function saveBookmark() {{
   const nameInput = document.getElementById('bookmark-name-input');
   const name = nameInput.value.trim();
@@ -832,7 +860,9 @@ function saveBookmark() {{
     return;
   }}
   const skills = {{ main: document.getElementById('main').value }};
-  for (let i = 1; i <= 5; i++) skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
+  for (let i = 1; i <= 5; i++) {{
+    skills[`skill${{i}}`] = document.getElementById(`skill${{i}}`).value;
+  }}
   const essences = {{}};
   SLOT_ORDER.forEach(slot => {{
     essences[slot] = selected[slot].map(e => e.name);
@@ -849,7 +879,9 @@ function loadBookmark(idx) {{
   const bm = bookmarks[idx];
   if (!bm) return;
   document.getElementById('main').value = bm.skills.main || '';
-  for (let i = 1; i <= 5; i++) document.getElementById(`skill${{i}}`).value = bm.skills[`skill${{i}}`] || '';
+  for (let i = 1; i <= 5; i++) {{
+    document.getElementById(`skill${{i}}`).value = bm.skills[`skill${{i}}`] || '';
+  }}
   onSkillChange();
   doSearch();
 
@@ -891,9 +923,14 @@ function renderBookmarks() {{
     </div>`).join('');
 }}
 
+// ブックマーク クリック（イベントデリゲーション）
 document.getElementById('bookmark-list').addEventListener('click', function(ev) {{
   const del = ev.target.closest('.bm-delete');
-  if (del) {{ ev.stopPropagation(); deleteBookmark(parseInt(del.dataset.idx)); return; }}
+  if (del) {{
+    ev.stopPropagation();
+    deleteBookmark(parseInt(del.dataset.idx));
+    return;
+  }}
   const tag = ev.target.closest('.bookmark-tag');
   if (tag) loadBookmark(parseInt(tag.dataset.idx));
 }});
@@ -958,6 +995,7 @@ document.getElementById('effect-search-input').addEventListener('keydown', funct
   if (ev.key === 'Enter') searchByEffect();
 }});
 
+// ===== 初期化 =====
 buildSkillGrid();
 renderBookmarks();
 </script>

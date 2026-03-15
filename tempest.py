@@ -176,25 +176,24 @@ HTML = f"""<!DOCTYPE html>
     --bg-primary: #f0f4f8;
     --bg-secondary: #ffffff;
     --bg-card: #ffffff;
-    --bg-card-hover: #f7fafc;
-    --accent: #0077b6;
-    --accent-glow: rgba(0,119,182,0.2);
-    --accent2: #6d28d9;
+    --bg-card-hover: #fffbeb;
+    --accent: #d97706;
+    --accent-glow: rgba(217,119,6,0.18);
+    --accent2: #b45309;
     --gold: #d97706;
-    --gold-dark: #b45309;
+    --gold-dark: #92400e;
     --text-primary: #1a202c;
     --text-secondary: #4a5568;
     --text-muted: #a0aec0;
     --border: #e2e8f0;
-    --border-accent: rgba(0,119,182,0.3);
-    --selected-bg: rgba(0,119,182,0.08);
-    --selected-border: #0077b6;
-    --success: #059669;
+    --border-accent: rgba(217,119,6,0.3);
+    --selected-bg: rgba(217,119,6,0.07);
+    --selected-border: #d97706;
     --slot-head: #dc2626;
     --slot-shoulder: #9333ea;
     --slot-chest: #2563eb;
     --slot-legs: #0d9488;
-    --slot-main: #ea580c;
+    --slot-main: #d97706;
     --slot-off: #db2777;
     --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
@@ -207,17 +206,21 @@ HTML = f"""<!DOCTYPE html>
     min-height: 100vh;
     line-height: 1.6;
   }}
-
-  /* Header */
   header {{
-    background: linear-gradient(135deg, #1e3a5f 0%, #312e81 100%);
-    border-bottom: 2px solid rgba(255,255,255,0.1);
-    padding: 1rem 1.5rem;
-    text-align: center;
+    background: linear-gradient(135deg, #713f12 0%, #422006 100%);
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    padding: 0.85rem 1.5rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }}
+  .header-inner {{
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }}
   .back-btn {{
     display: inline-flex;
@@ -233,13 +236,6 @@ HTML = f"""<!DOCTYPE html>
     white-space: nowrap;
   }}
   .back-btn:hover {{ color: white; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08); }}
-  .header-inner {{
-    max-width: 1600px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }}
   .header-title {{
     flex: 1;
     text-align: center;
@@ -247,7 +243,7 @@ HTML = f"""<!DOCTYPE html>
   .header-title h1 {{
     font-size: clamp(0.95rem, 2.5vw, 1.3rem);
     font-weight: 700;
-    background: linear-gradient(90deg, #fca5a5, #fde68a);
+    background: linear-gradient(90deg, #fde68a, #fed7aa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -256,9 +252,8 @@ HTML = f"""<!DOCTYPE html>
   .header-title p {{ color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.1rem; }}
   .header-spacer {{ width: 80px; }}
 
-  /* Selected panel */
   #selected-panel {{
-    background: linear-gradient(135deg, #eff6ff, #faf5ff);
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
     border-bottom: 2px solid var(--border);
     padding: 0.75rem 1.5rem;
     display: none;
@@ -280,8 +275,8 @@ HTML = f"""<!DOCTYPE html>
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(180,83,9,0.08);
-    border: 1px solid rgba(180,83,9,0.3);
+    background: rgba(146,64,14,0.08);
+    border: 1px solid rgba(146,64,14,0.3);
     border-radius: 20px;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
@@ -289,20 +284,17 @@ HTML = f"""<!DOCTYPE html>
     transition: all 0.2s;
     color: var(--text-primary);
   }}
-  .selected-tag:hover {{ background: rgba(180,83,9,0.15); }}
+  .selected-tag:hover {{ background: rgba(146,64,14,0.15); }}
   .selected-tag .slot-badge {{ font-size: 0.65rem; opacity: 0.7; }}
   .selected-tag .remove-btn {{ opacity: 0.45; font-size: 0.8rem; margin-left: 0.2rem; }}
   .selected-tag:hover .remove-btn {{ opacity: 1; }}
 
-  /* Main container */
   main {{
     max-width: 1600px;
     margin: 0 auto;
     padding: 1.5rem;
   }}
-
-  /* Skill section */
-  .skill-section {{
+  .skill-section, .bookmark-section {{
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -319,7 +311,7 @@ HTML = f"""<!DOCTYPE html>
     align-items: center;
     gap: 0.5rem;
   }}
-  .section-title.blue {{ color: var(--accent); }}
+  .section-title.amber {{ color: var(--accent); }}
   .section-title.gold {{ color: var(--gold-dark); }}
   .section-title::before {{
     content: '';
@@ -334,11 +326,7 @@ HTML = f"""<!DOCTYPE html>
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 0.8rem;
   }}
-  .skill-slot {{
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }}
+  .skill-slot {{ display: flex; flex-direction: column; gap: 0.35rem; }}
   .skill-slot label {{
     font-size: 0.72rem;
     color: var(--text-secondary);
@@ -357,7 +345,7 @@ HTML = f"""<!DOCTYPE html>
     transition: border-color 0.2s, box-shadow 0.2s;
     width: 100%;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%230077b6'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23d97706'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     box-shadow: var(--shadow);
@@ -367,21 +355,9 @@ HTML = f"""<!DOCTYPE html>
     border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-glow);
   }}
-  .skill-slot select.has-value {{
-    border-color: var(--accent);
-    color: var(--accent);
-    font-weight: 600;
-  }}
+  .skill-slot select.has-value {{ border-color: var(--accent); color: var(--accent); font-weight: 600; }}
 
-  /* Bookmark section */
-  .bookmark-section {{
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow);
-  }}
+  .bookmark-section {{ padding: 1.25rem 1.5rem; }}
   .bookmark-actions {{
     display: flex;
     align-items: center;
@@ -420,13 +396,7 @@ HTML = f"""<!DOCTYPE html>
     white-space: nowrap;
   }}
   #save-bookmark-btn:hover {{ transform: translateY(-1px); box-shadow: var(--shadow-md); }}
-  #save-bookmark-btn:active {{ transform: translateY(0); }}
-  #bookmark-list {{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    min-height: 1.5rem;
-  }}
+  #bookmark-list {{ display: flex; flex-wrap: wrap; gap: 0.5rem; min-height: 1.5rem; }}
   .bookmark-tag {{
     display: inline-flex;
     align-items: center;
@@ -443,23 +413,13 @@ HTML = f"""<!DOCTYPE html>
   .bookmark-tag:hover {{ background: #fde68a; border-color: #f59e0b; }}
   .bookmark-tag .bm-name {{ font-weight: 600; }}
   .bookmark-tag .bm-date {{ font-size: 0.68rem; opacity: 0.65; }}
-  .bookmark-tag .bm-delete {{
-    opacity: 0.45;
-    font-size: 0.72rem;
-    padding: 0.1rem 0.3rem;
-    border-radius: 50%;
-    transition: all 0.15s;
-  }}
+  .bookmark-tag .bm-delete {{ opacity: 0.45; font-size: 0.72rem; padding: 0.1rem 0.3rem; border-radius: 50%; transition: all 0.15s; }}
   .bookmark-tag .bm-delete:hover {{ opacity: 1; background: rgba(0,0,0,0.1); }}
   .bookmark-empty {{ font-size: 0.8rem; color: var(--text-muted); }}
 
-  /* Search button */
-  .search-wrap {{
-    text-align: center;
-    margin: 1.25rem 0;
-  }}
+  .search-wrap {{ text-align: center; margin: 1.25rem 0; }}
   #search-btn {{
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    background: linear-gradient(135deg, #92400e, var(--accent));
     color: white;
     border: none;
     border-radius: 30px;
@@ -469,7 +429,7 @@ HTML = f"""<!DOCTYPE html>
     cursor: pointer;
     letter-spacing: 0.05em;
     transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(0,119,182,0.3);
+    box-shadow: 0 4px 20px rgba(217,119,6,0.3);
     position: relative;
     overflow: hidden;
   }}
@@ -482,45 +442,20 @@ HTML = f"""<!DOCTYPE html>
     transition: left 0.5s;
   }}
   #search-btn:hover::before {{ left: 100%; }}
-  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(0,119,182,0.45); }}
+  #search-btn:hover {{ transform: translateY(-2px); box-shadow: 0 6px 30px rgba(217,119,6,0.45); }}
   #search-btn:active {{ transform: translateY(0); }}
 
-  /* Results */
   #results {{ display: none; }}
-  #results-header {{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-  }}
-  #results-header h2 {{
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-secondary);
-  }}
-  .tooltip-hint {{
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    text-align: center;
-    margin-bottom: 0.75rem;
-  }}
+  .tooltip-hint {{ font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-bottom: 0.75rem; }}
 
-  /* 6-column grid for PC */
   .slots-grid {{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 0.75rem;
   }}
-  @media (max-width: 1400px) {{
-    .slots-grid {{ grid-template-columns: repeat(3, 1fr); }}
-  }}
-  @media (max-width: 900px) {{
-    .slots-grid {{ grid-template-columns: repeat(2, 1fr); }}
-  }}
-  @media (max-width: 560px) {{
-    .slots-grid {{ grid-template-columns: 1fr; }}
-  }}
+  @media (max-width: 1400px) {{ .slots-grid {{ grid-template-columns: repeat(3, 1fr); }} }}
+  @media (max-width: 900px) {{ .slots-grid {{ grid-template-columns: repeat(2, 1fr); }} }}
+  @media (max-width: 560px) {{ .slots-grid {{ grid-template-columns: 1fr; }} }}
 
   .slot-card {{
     background: var(--bg-card);
@@ -529,8 +464,15 @@ HTML = f"""<!DOCTYPE html>
     overflow: hidden;
     transition: border-color 0.2s, box-shadow 0.2s;
     box-shadow: var(--shadow);
+    animation: fadeIn 0.25s ease both;
   }}
   .slot-card:hover {{ border-color: var(--border-accent); box-shadow: var(--shadow-md); }}
+  .slot-card:nth-child(1) {{ animation-delay: 0.03s; }}
+  .slot-card:nth-child(2) {{ animation-delay: 0.06s; }}
+  .slot-card:nth-child(3) {{ animation-delay: 0.09s; }}
+  .slot-card:nth-child(4) {{ animation-delay: 0.12s; }}
+  .slot-card:nth-child(5) {{ animation-delay: 0.15s; }}
+  .slot-card:nth-child(6) {{ animation-delay: 0.18s; }}
   .slot-header {{
     padding: 0.65rem 0.9rem;
     display: flex;
@@ -539,14 +481,7 @@ HTML = f"""<!DOCTYPE html>
     border-bottom: 1px solid var(--border);
     background: #f8fafc;
   }}
-  .slot-title {{
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--text-primary);
-  }}
+  .slot-title {{ display: flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.9rem; }}
   .slot-limit {{
     font-size: 0.68rem;
     background: rgba(0,0,0,0.05);
@@ -555,22 +490,11 @@ HTML = f"""<!DOCTYPE html>
     color: var(--text-secondary);
     white-space: nowrap;
   }}
-  .slot-limit.at-limit {{ background: rgba(0,119,182,0.1); color: var(--accent); font-weight: 700; }}
+  .slot-limit.at-limit {{ background: rgba(217,119,6,0.1); color: var(--accent); font-weight: 700; }}
   .slot-essences {{ padding: 0.4rem; }}
-  .essence-count {{
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    padding: 0.25rem 0.4rem;
-    text-align: right;
-  }}
-  .no-essences {{
-    padding: 1.25rem;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.82rem;
-  }}
+  .essence-count {{ font-size: 0.68rem; color: var(--text-muted); padding: 0.25rem 0.4rem; text-align: right; }}
+  .no-essences {{ padding: 1.25rem; text-align: center; color: var(--text-muted); font-size: 0.82rem; }}
 
-  /* Essence card */
   .essence-card {{
     border: 1.5px solid transparent;
     border-radius: 8px;
@@ -581,20 +505,13 @@ HTML = f"""<!DOCTYPE html>
     user-select: none;
   }}
   .essence-card:last-child {{ margin-bottom: 0; }}
-  .essence-card:hover {{
-    background: #f0f7ff;
-    border-color: rgba(0,119,182,0.25);
-  }}
+  .essence-card:hover {{ background: #fffbeb; border-color: rgba(217,119,6,0.2); }}
   .essence-card.selected {{
     background: var(--selected-bg);
     border-color: var(--selected-border);
     box-shadow: 0 0 0 1px var(--selected-border) inset;
   }}
-  .essence-card.disabled {{
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
-  }}
+  .essence-card.disabled {{ opacity: 0.3; cursor: not-allowed; pointer-events: none; }}
   .essence-name {{
     font-weight: 600;
     font-size: 0.84rem;
@@ -605,32 +522,18 @@ HTML = f"""<!DOCTYPE html>
     gap: 0.35rem;
     line-height: 1.3;
   }}
-  .essence-name .check-icon {{
-    color: var(--accent);
-    font-size: 0.72rem;
-    display: none;
-    flex-shrink: 0;
-  }}
+  .essence-name .check-icon {{ color: var(--accent); font-size: 0.72rem; display: none; flex-shrink: 0; }}
   .essence-card.selected .check-icon {{ display: inline; }}
-  .essence-skill {{
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    margin-bottom: 0.25rem;
-  }}
+  .essence-skill {{ font-size: 0.68rem; color: var(--text-muted); margin-bottom: 0.25rem; }}
   .essence-skill span {{
     color: var(--accent);
-    background: rgba(0,119,182,0.08);
+    background: rgba(217,119,6,0.07);
     padding: 0.08rem 0.35rem;
     border-radius: 4px;
     font-weight: 600;
   }}
-  .essence-desc {{
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }}
+  .essence-desc {{ font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }}
 
-  /* Slot color accents */
   .slot-card[data-slot="頭"] .slot-header {{ border-left: 3px solid var(--slot-head); }}
   .slot-card[data-slot="肩"] .slot-header {{ border-left: 3px solid var(--slot-shoulder); }}
   .slot-card[data-slot="胴"] .slot-header {{ border-left: 3px solid var(--slot-chest); }}
@@ -638,27 +541,12 @@ HTML = f"""<!DOCTYPE html>
   .slot-card[data-slot="メインハンド"] .slot-header {{ border-left: 3px solid var(--slot-main); }}
   .slot-card[data-slot="オフハンド"] .slot-header {{ border-left: 3px solid var(--slot-off); }}
 
-  /* Responsive */
+  @keyframes fadeIn {{ from {{ opacity: 0; transform: translateY(8px); }} to {{ opacity: 1; transform: translateY(0); }} }}
   @media (max-width: 600px) {{
     main {{ padding: 0.75rem; }}
     .skill-grid {{ grid-template-columns: repeat(2, 1fr); }}
-    header {{ padding: 0.75rem 1rem; }}
-    #selected-panel {{ padding: 0.75rem 1rem; }}
-    .bookmark-section, .skill-section {{ padding: 1rem; }}
+    .header-inner {{ gap: 0.5rem; }}
   }}
-
-  /* Animation */
-  @keyframes fadeIn {{
-    from {{ opacity: 0; transform: translateY(8px); }}
-    to {{ opacity: 1; transform: translateY(0); }}
-  }}
-  .slot-card {{ animation: fadeIn 0.25s ease both; }}
-  .slot-card:nth-child(1) {{ animation-delay: 0.03s; }}
-  .slot-card:nth-child(2) {{ animation-delay: 0.06s; }}
-  .slot-card:nth-child(3) {{ animation-delay: 0.09s; }}
-  .slot-card:nth-child(4) {{ animation-delay: 0.12s; }}
-  .slot-card:nth-child(5) {{ animation-delay: 0.15s; }}
-  .slot-card:nth-child(6) {{ animation-delay: 0.18s; }}
 
   /* ===== 効果検索 ===== */
   .effect-search-section {{
@@ -760,8 +648,8 @@ HTML = f"""<!DOCTYPE html>
   <div class="header-inner">
     <a class="back-btn" href="index.py">← クラス選択</a>
     <div class="header-title">
-  <h1>⚔️ テンペスト 精髄チェッカー</h1>
-  <p>スキルを選択して使用可能な精髄を検索</p>
+      <h1>テンペスト 精髄チェッカー</h1>
+      <p>スキルを選択して使用可能な精髄を検索</p>
     </div>
     <div class="header-spacer"></div>
   </div>
@@ -774,7 +662,7 @@ HTML = f"""<!DOCTYPE html>
 
 <main>
   <section class="skill-section">
-    <h2 class="section-title blue">スキル選択</h2>
+    <h2 class="section-title amber">スキル選択</h2>
     <div class="skill-grid" id="skill-grid"></div>
   </section>
 
@@ -788,7 +676,7 @@ HTML = f"""<!DOCTYPE html>
   </section>
 
   <section class="effect-search-section">
-    <h2 class="section-title blue">🔎 効果検索</h2>
+    <h2 class="section-title amber">🔎 効果検索</h2>
     <div class="effect-search-actions">
       <input type="text" id="effect-search-input" placeholder="効果に含まれるキーワード（例：スタン、冷気、ノックバック）" maxlength="50">
       <button id="effect-search-btn" onclick="searchByEffect()">🔍 検索</button>
@@ -817,6 +705,8 @@ const MAIN_ATTACKS = {main_attacks_json};
 const SKILLS = {skills_json};
 const SLOT_ICONS = {{"頭":"🪖","肩":"🦺","胴":"🛡️","脚":"👟","メインハンド":"⚔️","オフハンド":"🗡️"}};
 const SLOT_ORDER = ["頭","肩","胴","脚","メインハンド","オフハンド"];
+const BM_KEY = 'tempest_bookmarks';
+
 
 // 現在表示中の精髄データ（スロットごと）
 let currentEssences = {{}};
@@ -1008,15 +898,15 @@ function saveBookmark() {{
   SLOT_ORDER.forEach(slot => {{
     essences[slot] = selected[slot].map(e => e.name);
   }});
-  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  const bookmarks = JSON.parse(localStorage.getItem(BM_KEY) || '[]');
   bookmarks.push({{ name, skills, essences, date: new Date().toLocaleDateString('ja-JP') }});
-  localStorage.setItem('tempest_bookmarks', JSON.stringify(bookmarks));
+  localStorage.setItem(BM_KEY, JSON.stringify(bookmarks));
   nameInput.value = '';
   renderBookmarks();
 }}
 
 function loadBookmark(idx) {{
-  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  const bookmarks = JSON.parse(localStorage.getItem(BM_KEY) || '[]');
   const bm = bookmarks[idx];
   if (!bm) return;
   document.getElementById('main').value = bm.skills.main || '';
@@ -1043,15 +933,15 @@ function loadBookmark(idx) {{
 }}
 
 function deleteBookmark(idx) {{
-  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  const bookmarks = JSON.parse(localStorage.getItem(BM_KEY) || '[]');
   bookmarks.splice(idx, 1);
-  localStorage.setItem('tempest_bookmarks', JSON.stringify(bookmarks));
+  localStorage.setItem(BM_KEY, JSON.stringify(bookmarks));
   renderBookmarks();
 }}
 
 function renderBookmarks() {{
   const list = document.getElementById('bookmark-list');
-  const bookmarks = JSON.parse(localStorage.getItem('tempest_bookmarks') || '[]');
+  const bookmarks = JSON.parse(localStorage.getItem(BM_KEY) || '[]');
   if (bookmarks.length === 0) {{
     list.innerHTML = '<span class="bookmark-empty">ブックマークはまだありません</span>';
     return;
